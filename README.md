@@ -1,5 +1,6 @@
 
 # LOD2建築物モデル自動生成ツール
+![image 8](https://user-images.githubusercontent.com/79615787/227534529-f858e8e7-1c56-49de-a5ab-5be177c1a0a9.png)
 
 LOD2建築物モデル自動生成ツール（以下、「本ツール」）は、国土交通省が進めるProject PLATEAUの一環として2022年度に開発されました。\
 本ツールは、DSM点群や建物外形データ等を入力データとしてLOD2建築物モデルの作成を自動的に行い、CityGML 形式で出力するシステムです。
@@ -149,7 +150,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 # 利用手順
 
-本ツールの利用方法についてはチュートリアルを参照してください。
+本ツールの利用方法については[チュートリアル](/docs/TUTORIAL.md)を参照してください。
 
 <br />
 
@@ -173,6 +174,6 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 # 参考資料
 
 - LOD2建築物モデル自動生成ツールチュートリアル:  
-<https://github.com/AAS-BasicSystemsDevelopmentDept/LOD2Creator/blob/main/docs/TUTORIAL.md>
+<https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool/blob/main/docs/TUTORIAL.md>
 - LOD2建築物モデル自動生成ツールユーザマニュアル:  
-<https://github.com/AAS-BasicSystemsDevelopmentDept/LOD2Creator/blob/main/docs/USER_MANUAL.md>
+<https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool/blob/main/docs/USER_MANUAL.md>
