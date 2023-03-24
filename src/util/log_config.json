@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "None": {
+            "format": "%(message)s"
+        },
+        "Versatility": {
+            "format": "%(asctime)s [%(levelname)s] %(message)s"
+        }
+    },
+
+    "handlers": {
+        "Console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "Versatility",
+            "stream": "ext://sys.stdout"
+        },
+        "ConsoleNoForm": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "None",
+            "stream": "ext://sys.stdout"
+        },
+        "MainLogFileNoForm": {
+            "class": "logging.FileHandler",
+            "level": "INFO",
+            "formatter": "None",
+            "filename": "output_log.txt"
+        },
+        "MainLogFile": {
+            "class": "logging.FileHandler",
+            "level": "INFO",
+            "formatter": "Versatility",
+            "filename": "output_log.txt"
+        }
+    },
+
+    "loggers": {
+        "Console": {
+            "level": "INFO",
+            "handlers": ["Console"],
+            "propagate": false
+        },
+        "ConsoleNoForm": {
+            "level": "INFO",
+            "handlers": ["ConsoleNoForm"],
+            "propagate": false
+        },
+        "MainLogFile": {
+            "level": "INFO",
+            "handlers": ["MainLogFile"],
+            "propagate": false
+        },
+        "MainLogFileNoForm": {
+            "level": "INFO",
+            "handlers": ["MainLogFileNoForm"],
+            "propagate": false
+        },
+        "InputCityGMLLog": {
+            "level": "DEBUG",
+            "handlers": [],
+            "propagate": false
+        },
+        "ModelElementGenerationLog": {
+            "level": "DEBUG",
+            "handlers": [],
+            "propagate": false
+        },
+        "CheckPhaseConsistensyLog": {
+            "level": "DEBUG",
+            "handlers": [],
+            "propagate": false
+        },
+        "PasteTextureLog": {
+            "level": "DEBUG",
+            "handlers": [],
+            "propagate": false
+        },
+        "OutputCityGMLLog": {
+            "level": "DEBUG",
+            "handlers": [],
+            "propagate": false
+        },
+        "Summary": {
+            "level": "INFO",
+            "handlers": [],
+            "propagate": false
+        }
+    },
+    "root": {
+        "level": "INFO"
+    }
+}
