@@ -1,6 +1,5 @@
 
 # LOD2建築物モデル自動生成ツール
-![image 8](https://user-images.githubusercontent.com/79615787/227534529-f858e8e7-1c56-49de-a5ab-5be177c1a0a9.png)
 
 LOD2建築物モデル自動生成ツール（以下、「本ツール」）は、国土交通省が進めるProject PLATEAUの一環として2022年度に開発されました。\
 本ツールは、DSM点群や建物外形データ等を入力データとしてLOD2建築物モデルの作成を自動的に行い、CityGML 形式で出力するシステムです。
@@ -111,7 +110,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 以下のコマンドで本ツールのリポジトリの最新版をクローンします。
 
-`> git clone https://github.com/AAS-BasicSystemsDevelopmentDept/Auto-Create-bldg-lod2-tool.git AutoCreateLod2`
+`> git clone https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool.git AutoCreateLod2`
 
 <br />
 
@@ -123,7 +122,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 以下より、建物分類用モデル（ファイル名：classifier_parameter.pkl）をダウンロードします。
 <br />
-<https://nikken-jp.box.com/s/cbme96vyjxfj7a1pnnqc0ryl1dmdvkm7>
+<https://drive.google.com/file/d/1ksmCxr5n2yC-p5lgcO0c3te-4cy_IDgX/view?usp=sharing>
 
 <br />
 
@@ -131,7 +130,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 以下より、屋根線検出用モデル（ファイル名：roof_edge_detection_parameter.pth）をダウンロードします。
 <br />
-<https://nikken-jp.box.com/s/ymnqcgj7azgkfm2rhx9x2hy2eq0762w6>
+<https://drive.google.com/file/d/1IdtuAQA20WBtdA70wiFxBEt0kDHBEzsK/view?usp=sharing>
 
 <br />
 
@@ -139,7 +138,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 以下より、バルコニー検出用モデル（ファイル名：balcony_segmentation_parameter.pkl）をダウンロードします。
 <br />
-<https://nikken-jp.box.com/s/epu8ihytupko12lnp001ro5462xkuczy>
+<https://drive.google.com/file/d/1qRs5Xao2TmFyh2kRfb8IfzZIXUmBbBcn/view?usp=sharing>
 
 <br />
 
@@ -150,7 +149,7 @@ LOD2建築物モデル自動生成ツール（以下、「本ツール」）は�
 
 # 利用手順
 
-本ツールの利用方法については[チュートリアル](/docs/TUTORIAL.md)を参照してください。
+本ツールの利用方法についてはチュートリアルを参照してください。
 
 <br />
 

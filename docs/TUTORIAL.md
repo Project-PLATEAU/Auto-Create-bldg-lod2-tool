@@ -19,7 +19,7 @@
 
 以下より、本チュートリアルで使用されているデータセットをダウンロードします。
 <br />
-<https://nikken-jp.box.com/s/n960r9l5kiju1ddl6ne9vlskkmatzt8a>
+<https://drive.google.com/file/d/1iKnqPgkp9HXaASb3Kkb8uZc3BCqjwRrU/view?usp=sharing>
 
 <br />
 
@@ -420,4 +420,4 @@ param.json : 設定パラメータファイルパス
 # 参考資料
 
 - LOD2建築物自動生成ツールユーザマニュアル:  
-<https://github.com/AAS-BasicSystemsDevelopmentDept/LOD2Creator/blob/main/docs/USER_MANUAL.md>
+<https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool/blob/main/docs/USER_MANUAL.md>

@@ -434,7 +434,7 @@ class CityGmlManager:
                     "{" + self._nsmap['app'] + "}" + "textureCoordinates",
                     {"ring": "#shape_" + info.id_base})
                 elem7.text = ' '.join(str_list)
-                elem8.text = ' '.join(str_list)
+
 
         # 一つでも座標配列が見つかれば成功
         if elem5 is not None:
