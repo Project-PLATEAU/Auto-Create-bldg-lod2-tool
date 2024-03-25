@@ -1,0 +1,12 @@
+colorama==0.4.6
+DateTime==5.4
+lxml==4.9.2
+mypy==1.4.0
+mypy-extensions==1.0.0
+numpy==1.25.0
+opencv-contrib-python==4.7.0.72
+pytz==2023.3.post1
+tomli==2.0.1
+tqdm==4.66.1
+typing_extensions==4.6.3
+zope.interface==6.1

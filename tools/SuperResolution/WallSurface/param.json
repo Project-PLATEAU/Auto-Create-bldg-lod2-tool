@@ -1,0 +1,8 @@
+{
+    "InputDir": "./data",
+    "OutputDir": "./output/result",
+    "Device": "cuda",
+    "OutputLogDir": "./output/log",
+    "DebugLogOutput": "true"
+}
+
