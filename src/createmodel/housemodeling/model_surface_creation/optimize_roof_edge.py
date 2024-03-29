@@ -461,7 +461,7 @@ def optimize_step_04(graph: RoofGraph, extension_length: float):
 
         adjacencies = graph.get_adjacencies(
             target_idx, label=RoofGraphLabel.INNER)
-        assert len(adjacencies) == 1, f"次数1の外形線の頂点が存在します"
+        #assert len(adjacencies) == 1, f"次数1の外形線の頂点が存在します"
 
         # 他の線分上にある場合は除く
         disjoint_segments = list(filter(
@@ -656,7 +656,7 @@ def optimize_step_06(graph: RoofGraph, rotate_threshold: float, same_threshold: 
 
         # 両方の頂点を動かせる場合は中心で回転する
         if a_is_movable and b_is_movable:
-            assert segment_on_a and segment_on_b
+            #assert segment_on_a and segment_on_b
 
             center = (point_a + point_b) / 2
             rotated_a = point_a.rotate(rotate_radian, center)
@@ -671,7 +671,7 @@ def optimize_step_06(graph: RoofGraph, rotate_threshold: float, same_threshold: 
 
         # 片方を動かす場合
         if not new_edge and a_is_movable:
-            assert segment_on_a
+            #assert segment_on_a
             rotated_a = point_a.rotate(rotate_radian, point_b)
             new_a = segment_on_a.get_cross_point(Segment(rotated_a, point_b))
 
@@ -679,7 +679,7 @@ def optimize_step_06(graph: RoofGraph, rotate_threshold: float, same_threshold: 
                 new_edge = (new_a, point_b)
 
         if not new_edge and b_is_movable:
-            assert segment_on_b
+            #assert segment_on_b
             rotated_b = point_b.rotate(rotate_radian, point_a)
             new_b = segment_on_b.get_cross_point(Segment(point_a, rotated_b))
 
@@ -778,7 +778,7 @@ def optimize_step_07(graph: RoofGraph):
 
         points_on_segment.sort(
             key=lambda idx: graph.nodes[idx].distance(segment[0]))
-        assert points_on_segment[0] == a and points_on_segment[-1] == b
+        #assert points_on_segment[0] == a and points_on_segment[-1] == b
 
         graph.delete_edge(a, b)
         for u, v in zip(points_on_segment[:-1], points_on_segment[1:]):

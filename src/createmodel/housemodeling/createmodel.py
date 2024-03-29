@@ -52,6 +52,7 @@ def CreateModel(
     rgb_image, depth_image = preprocess.preprocess(
         cloud,
         min_ground_height,
+        shape
     )
 
     # 地理座標と画像座標の変換を行うクラスを作成

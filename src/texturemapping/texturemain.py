@@ -217,7 +217,7 @@ class TextureMain():
                                 os.path.basename(path)))
                         Log.output_log_write(LogLevel.WARN,
                                              ModuleType.PASTE_TEXTURE,
-                                             e + ' ' + path)
+                                             str(e) + ' ' + path)
                         restype = ResultType.WARN
                         build.paste_texture = ProcessResult.ERROR
             return restype

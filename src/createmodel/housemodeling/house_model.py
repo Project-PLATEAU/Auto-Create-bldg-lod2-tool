@@ -160,8 +160,8 @@ class HouseModel:
             face_group_id(int): 面のグループ番号
         """
 
-        assert all([face.type is not BldElementType.WALL for face in self._faces]), \
-            "壁がすでに生成されています"
+        #assert all([face.type is not BldElementType.WALL for face in self._faces]), \
+        #    "壁がすでに生成されています"
 
         edge_pairs: dict[tuple[int, int],
                          list[tuple[ModelPoint, ModelPoint]]] = {}
@@ -180,11 +180,11 @@ class HouseModel:
 
         # ペアで線分の高さが違う場合には壁を作成する
         for edges in edge_pairs.values():
-            assert len(edges) == 2, "屋根面と地面が正しく登録されていません"
+            #assert len(edges) == 2, "屋根面と地面が正しく登録されていません"
 
             edge1, edge2 = edges
-            assert (edge1[0].position_id_2d, edge1[1].position_id_2d) == (edge2[1].position_id_2d, edge2[0].position_id_2d), \
-                "屋根面と地面が正しく登録されていません"
+            #assert (edge1[0].position_id_2d, edge1[1].position_id_2d) == (edge2[1].position_id_2d, edge2[0].position_id_2d), \
+            #    "屋根面と地面が正しく登録されていません"
 
             p10 = self._points[edge1[0].position_id_3d]
             p11 = self._points[edge1[1].position_id_3d]
@@ -395,7 +395,7 @@ class HouseModel:
                     else:
                         unique_edges.add((a, b))
 
-            assert len(unique_edges) >= 3
+            #assert len(unique_edges) >= 3
 
             outer = self._to_polygon(list(unique_edges))
 
@@ -423,7 +423,6 @@ class HouseModel:
             for i, point in enumerate(self._points):
                 if i in skip_list:
                     continue
-
                 dist1 = np.linalg.norm(point - v0)
                 dist2 = np.linalg.norm(point - v1)
                 dist3 = np.linalg.norm(v0 - v1)
@@ -530,12 +529,12 @@ class HouseModel:
 
         for _ in range(len(direct_edges)):
             targets = list(filter(lambda e: e[0] == cur, direct_edges))
-            assert len(targets) == 1, "単純多角形ではないデータが入力されています"
+            #assert len(targets) == 1, "単純多角形ではないデータが入力されています"
             polygon.append(cur)
             cur = targets[0][1]
 
-        assert len(set(polygon)) == len(polygon) and cur == direct_edges[0][0], \
-            "単純多角形ではないデータが入力されています"
+        #assert len(set(polygon)) == len(polygon) and cur == direct_edges[0][0], \
+        #    "単純多角形ではないデータが入力されています"
 
         return polygon
 

@@ -96,17 +96,18 @@ class Building:
             self._shape, self._ground_area)
 
         building_class = ClassifyBuilding(
+            building_id=self._id,
             cloud=cloud,
             shape=self._shape,
             classifier_checkpoint_path=param.classifier_checkpoint_path,
             use_gpu=param.use_gpu,
             grid_size=0.25,
-            expand_rate_for_house_model=0.25 / 0.08,
+            expand_rate_for_house_model=0.25 / 0.08
         )
 
         if building_class == BuildingClass.FLAT:
             # 陸屋根の場合
-            CreateBuildingModel(
+            CreateBuildingModel(                
                 cloud=cloud, shape=self._shape,
                 graphcut_height=graphcut_height,
                 grid_size=self._grid_size,
@@ -115,9 +116,6 @@ class Building:
                 output_folder_path=self._output_folder_path)
 
         elif building_class == BuildingClass.NON_FLAT:
-            # GPU無し環境の対応：
-            # return
-
             # 非陸屋根の場合
             CreateHouseModel(
                 cloud=cloud,

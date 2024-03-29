@@ -62,6 +62,10 @@ class CreateModelMessage:
     """Lasフォルダが存在しない
     """
 
+    ERR_MSG_LAS_MNG_UNSUPPORTED_LAS_FORMAT = 'Unsupported LAS format.'
+    """Lasファイルのフォーマットがサポートしない
+    """
+
     ERR_MSG_LAS_MNG_LAS_NOT_FOUND = 'LAS file does not exist.'
     """Lasファイルが存在しない
     """

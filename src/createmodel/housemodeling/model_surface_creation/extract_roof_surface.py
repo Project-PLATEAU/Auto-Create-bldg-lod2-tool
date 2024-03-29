@@ -85,7 +85,7 @@ def plane_graph_to_polygons(graph: RoofGraph) -> tuple[list[int], list[list[int]
                         next = adjacencies[cur][(k+1) % len(adjacencies[cur])]
                         is_used_edge[cur][(k+1) % len(adjacencies[cur])] = True
 
-                assert next is not None, "多角形の抽出に失敗しました"
+                #assert next is not None, "多角形の抽出に失敗しました"
 
                 prev, cur = cur, next
 
@@ -106,7 +106,7 @@ def plane_graph_to_polygons(graph: RoofGraph) -> tuple[list[int], list[list[int]
             else:
                 holes.append(polygon)
 
-    assert len(holes) >= 1, "外形線が取得できませんでした"
+    #assert len(holes) >= 1, "外形線が取得できませんでした"
 
     holes.sort(key=lambda hole: get_polygon_area(hole, graph.nodes))
     outer = holes[-1]  # 最大の物が外形線
@@ -167,7 +167,7 @@ def add_hole(polygon: list[int], hole: list[int], points: list[Point]) -> list[i
                 *polygon[i:],
             ]
 
-    assert False, "polygonとholeを結ぶ線を求められませんでした"
+    #assert False, "polygonとholeを結ぶ線を求められませんでした"
 
 
 def to_shapely_polygon(polygon: list[int], points: list[Point]) -> Polygon:

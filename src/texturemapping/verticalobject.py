@@ -501,7 +501,8 @@ class DstTextureFile():
         self.src_texture = list()
         # 入力テクスチャ画像数
         self.num_srctex = 0
-    
+        self._outputmargin = 2
+
     def get_newsrc_texture(self):
         """入力テクスチャオブジェクトを作成する
 
@@ -522,40 +523,58 @@ class DstTextureFile():
         Returns:
             bool: テクスチャ出力成功(True)/テクスチャ出力画像なし(False)
         """
+
+        def get_texpoly_bbox(texver, img_width, img_height):
+            min_ver = np.floor(np.minimum.reduce(texver)).astype(np.int32)
+            max_ver = np.ceil(np.maximum.reduce(texver)).astype(np.int32)
+            if (0 <= min_ver[0] - self._outputmargin) \
+                and (0 <= min_ver[1] - self._outputmargin) \
+                and (max_ver[0] + self._outputmargin < img_width) \
+                and (max_ver[1] + self._outputmargin < img_height):
+                # 元画像をはみ出さない場合、マージンをつける
+                min_ver = min_ver - self._outputmargin
+                max_ver = max_ver + self._outputmargin
+                output_margin = self._outputmargin
+            else:
+                output_margin = 0
+
+            polygon_w = max_ver[0] - min_ver[0] + 1
+            polygon_h = max_ver[1] - min_ver[1] + 1
+
+            return min_ver[0], min_ver[1], polygon_w, polygon_h, output_margin
+
+
         if self.num_srctex < 1:
             return False
 
-        origin_h = 0
+        # 出力画像サイズの計算 => output_h, output_w
         origin_w = 0
+        origin_h = 0
         linemax_h = 0
         linemax_w = 0
-        val = 1
-        ret = True
-
-        # 出力画像サイズの計算
         for srcTex in self.src_texture:
+            img = Cv2Japanese.imread(os.path.join(srcTex.ref_image.photodir, srcTex.ref_image.filename))
             for texver in srcTex.texcoord:
-                min_ver = np.minimum.reduce(texver)
-                max_ver = np.maximum.reduce(texver)
-                polygon_w = math.ceil(max_ver[0] - min_ver[0])
-                polygon_h = math.ceil(max_ver[1] - min_ver[1])
+                _, _, polygon_w, polygon_h, _ = get_texpoly_bbox(texver, img.shape[1], img.shape[0])
 
-                # 同じ行で最大の高さ
-                linemax_h = linemax_h if linemax_h > polygon_h else polygon_h
-
-                # 出力幅を超えたら次の行へ移動
                 if self.OUTPUT_MAX_W < origin_w + polygon_w:
-                    linemax_w = linemax_w if linemax_w > origin_w else origin_w
-                    origin_w = 0
+                    # 出力幅を超えたら次の行へ移動
+                    origin_w = polygon_w
                     origin_h += linemax_h
                     linemax_h = polygon_h
-                
-                origin_w += polygon_w
+                else:
+                    origin_w += polygon_w
+                    # 同じ行で最大の高さ
+                    linemax_h = linemax_h if linemax_h > polygon_h else polygon_h
+                    
+                # 最大行長さ
+                linemax_w = linemax_w if linemax_w  > origin_w else origin_w
 
         output_h = origin_h + linemax_h
-        output_w = linemax_w if linemax_w > origin_w else origin_w
+        output_w = linemax_w
 
         # 出力画像サイズを2^nに補正
+        val = 1
         while val < output_h:
             val *= 2
         output_h = val
@@ -568,61 +587,54 @@ class DstTextureFile():
         # 白紙の出力画像を作成
         output = np.full((output_h, output_w, 3), 255, dtype='uint8')
 
+        # テクスチャ貼り付け
         origin_h = 0
         origin_w = 0
+        linemax_h = 0
         for srcTex in self.src_texture:
             # オリジナル画像のオープン
-            # img = cv2.imread(str(os.path.join(srcTex.ref_image.photoDir, srcTex.ref_image.fileName)))
             img = Cv2Japanese.imread(os.path.join(srcTex.ref_image.photodir, srcTex.ref_image.filename))
             for texver in srcTex.texcoord:
+                min_x, min_y, polygon_w, polygon_h, output_margin = get_texpoly_bbox(texver, img.shape[1], img.shape[0])
 
-                min_ver = np.minimum.reduce(texver)
-                max_ver = np.maximum.reduce(texver)
-                polygon_w = math.ceil(max_ver[0] - min_ver[0])
-                polygon_h = math.ceil(max_ver[1] - min_ver[1])
-
+                # 背景画像（白画像）
                 back = np.full((polygon_h, polygon_w, 3), 255, dtype='uint8')
+
+                # マスク画像
                 mask = np.full((polygon_h, polygon_w), 0, dtype='uint8')
-                # dst = srcTex.ref_image.img[math.ceil(min_ver[1]):
-                #                            math.ceil(min_ver[1]) + polygon_h,
-                #                            math.ceil(min_ver[0]):
-                #                            math.ceil(min_ver[0]) + polygon_w]
-                dst = img[math.ceil(min_ver[1]):
-                          math.ceil(min_ver[1]) + polygon_h,
-                          math.ceil(min_ver[0]):
-                          math.ceil(min_ver[0]) + polygon_w]
 
-                poly_ver = texver - [min_ver[0], min_ver[1]]
-                # poly_ver = np.append(poly_ver, [poly_ver[0]], axis=0)
+                # 前景画像（テクスチャ）
+                dst = img[min_y:min_y + polygon_h, min_x:min_x + polygon_w]
 
-                poly_ver = poly_ver * 2**10
+                # テクスチャポリコン座標の原点を(min_x, min_y)にする
+                poly_ver = texver - [min_x, min_y]
 
-                # cv2.fillConvexPoly(mask, points=poly_ver.astype(np.int64), color=(255, 255, 255), shift=10)
-                cv2.fillPoly(mask,
-                             [poly_ver.astype(np.int64)],
-                             color=(255, 255, 255),
-                             shift=10)
+                # 前景（テクスチャポリコン+マージン）のマスクを生成
+                cv2.fillPoly(mask, [poly_ver.astype(np.int64)], color=(255, 255, 255))
+                cv2.polylines(mask, [poly_ver.astype(np.int64)], isClosed=True, color=(255, 255, 255), thickness=output_margin*2)
+
+                # 前景画像+背景画像
                 polygon = np.where(mask[:, :, np.newaxis] == 0, back, dst)
 
-                # 同じ行で最大の高さ
-                linemax_h = linemax_h if linemax_h > polygon_h else polygon_h
-                # 出力幅を超えたら次の行へ移動
+                # 出力幅を超えたら次の行へ移動                
                 if output_w < origin_w + polygon_w:
                     origin_w = 0
                     origin_h += linemax_h
-                    linemax_h = polygon_h
+                    linemax_h = 0                   
 
                 # テクスチャ貼付け
-                output[origin_h:origin_h + polygon_h,
-                       origin_w:origin_w + polygon_w] = polygon
-                # 貼り付け先の座標に変換
-                uv_set = np.array([output_w, output_h])
-                xy_set = texver - (np.minimum.reduce(
-                                   texver - [origin_w, origin_h]))
+                output[origin_h:origin_h + polygon_h, origin_w:origin_w + polygon_w] = polygon
+
+                # テクスチャポリコンの座標を貼り付け先の座標に変換               
+                xy_set = texver - [min_x, min_y] + [origin_w, origin_h]
+
                 # XY座標→UV左上原点→UV左下原点に変換
+                uv_set = np.array([output_w, output_h])
                 srcTex.outputcoord.append(abs(xy_set / uv_set - [0, 1]))
 
+                # 更新
                 origin_w += polygon_w
+                linemax_h = linemax_h if linemax_h > polygon_h else polygon_h
 
         # テクスチャ貼付け画像出力
         if self.OUTPUT_MAX_H < output_h:
