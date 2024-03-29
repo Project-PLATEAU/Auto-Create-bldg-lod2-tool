@@ -1,0 +1,46 @@
+# Pretreatment parameter information
+
+processing:
+  overlap: 0.0
+  size: 256
+  z_threshold: 0.02
+  lower_limit: 16
+  upper_limit: 256
+
+cyclegan:
+  direction: 'AtoB'
+  verbose: False
+  dataset:
+    input_nc: 3
+    output_nc: 3
+    preprocess: 'resize_and_crop'
+    load_size: 256
+    no_flip: True
+  model:
+    isTrain: False
+    continue_train: False
+    name: 'CycleGAN_d10'
+    netG: 'resnet_9blocks'
+    netD: 'basic'
+    checkpoints_dir: ./checkpoint
+  network:
+    ngf: 64
+    ndf: 64
+    n_layers_D: 3
+    init_type: normal
+    init_gain: 0.02
+    norm: instance
+    no_dropout: True
+  train:
+    gan_mode: lsgan
+    epoch: 'latest'
+    load_iter: 0
+    lambda_identity: 0.5
+    pool_size: 50
+    lr: 0.0002
+    beta1: 0.5
+    lr_policy: 'linear'
+    epoch_count: 1
+    niter: 100
+    niter_decay: 100
+    lr_decay_iters: 50

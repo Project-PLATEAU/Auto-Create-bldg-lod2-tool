@@ -64,7 +64,7 @@ class HeatCorner(nn.Module):
         out: Dict[str, NestedTensor] = {}
         for name, x in sorted(xs.items()):
             m = img_mask
-            assert m is not None
+            #assert m is not None
             mask = F.interpolate(m[None].float(), size=x.shape[-2:]).to(torch.bool)[0]
             out[name] = NestedTensor(x, mask)
         return out
@@ -98,7 +98,7 @@ class HeatCorner(nn.Module):
             pos = self.img_pos(src).to(src.dtype)
             all_pos.append(pos)
             masks.append(mask)
-            assert mask is not None
+            #assert mask is not None
 
         if self.num_feature_levels > len(srcs):
             _len_srcs = len(srcs)

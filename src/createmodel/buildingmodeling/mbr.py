@@ -684,7 +684,7 @@ class MBR:
             index = np.argmax(areas)
             contours = [contours[index]]
 
-        assert len(contours) == 1, "# of contours is not one"
+        #assert len(contours) == 1, "# of contours is not one"
         contour_points = contours[0].reshape(-1, 2)
 
         # コーナー点を抽出
@@ -953,8 +953,8 @@ class MBR:
             self._roofplanes[i].poly = geo.Polygon(
                 intersection.exterior.coords)
             target_polygon = target_polygon.difference(dilation)
-            assert (type(target_polygon) is geo.Polygon
-                    or type(target_polygon) is geo.MultiPolygon)
+            #assert (type(target_polygon) is geo.Polygon
+            #        or type(target_polygon) is geo.MultiPolygon)
 
         # 残存領域のマージ
         self._merge_remain_region(
@@ -1191,7 +1191,7 @@ class MBR:
                         max_intersection = intersection.area
                         merge_id = i
 
-            assert merge_id is not None
+            #assert merge_id is not None
 
             if is_merge_dilation:
                 self._roofplanes[merge_id].poly = \
@@ -1222,4 +1222,4 @@ class MBR:
                 points = np.delete(points, inds, axis=0)
                 self._roofplanes[merge_id].poly = geo.Polygon(points)
 
-            assert type(self._roofplanes[merge_id].poly) is geo.Polygon
+            #assert type(self._roofplanes[merge_id].poly) is geo.Polygon

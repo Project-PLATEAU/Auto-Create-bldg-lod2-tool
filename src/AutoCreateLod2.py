@@ -2,6 +2,9 @@ import sys
 import shutil
 import os
 import glob
+import csv
+import re
+from pathlib import Path
 
 # import before shapely (https://github.com/shapely/shapely/issues/1435)
 import torch
@@ -145,14 +148,47 @@ def main():
                     continue
 
                 # テクスチャ自動張付け
-                log.module_start_log(ModuleType.PASTE_TEXTURE, file_name)
+                if param_manager.output_texture:
+                    log.module_start_log(ModuleType.PASTE_TEXTURE, file_name)
 
-                texture_main = TextureMain(param_manager)
-                ret_paste_texture = texture_main.texture_main(
-                    buildings=buildings, file_name=file_name)
+                    texture_main = TextureMain(param_manager)
+                    ret_paste_texture = texture_main.texture_main(
+                        buildings=buildings, file_name=file_name)
 
-                log.module_result_log(ModuleType.PASTE_TEXTURE,
-                                      ret_paste_texture)
+                    log.module_result_log(ModuleType.PASTE_TEXTURE,
+                                          ret_paste_texture)
+                else:
+                    input_objdir = Config.OUTPUT_PHASE_OBJDIR
+                    output_objdir = Config.OUTPUT_TEX_OBJDIR
+                    if os.path.isdir(output_objdir):
+                        shutil.rmtree(output_objdir)   # 既存フォルダは削除
+                    os.mkdir(output_objdir)
+
+                    pathlist = sorted(
+                        [p for p in Path(input_objdir).glob('**/*')
+                            if re.search(r'/*\.obj', str(p))])
+                    for path in pathlist:
+                        shutil.copyfile(
+                            path,
+                            os.path.join(output_objdir, os.path.basename(path)))
+
+                    # 最終出力にOBJファイルを出力する場合
+                    if param_manager.output_obj:
+                        # 出力フォルダの作成
+                        optional_output_objdir = os.path.join(
+                            param_manager.output_folder_path, 'obj',
+                            os.path.splitext(file_name)[0])
+                        if not os.path.isdir(optional_output_objdir):
+                            os.makedirs(optional_output_objdir)
+
+                        pathlist = sorted(
+                            [p for p in Path(input_objdir).glob('**/*')
+                                if re.search(r'/*\.obj', str(p))])
+                        for path in pathlist:
+                            shutil.copyfile(
+                                path,
+                                os.path.join(optional_output_objdir,
+                                                os.path.basename(path)))
 
                 # CityGML出力
                 log.module_start_log(ModuleType.OUTPUT_CITYGML, file_name)

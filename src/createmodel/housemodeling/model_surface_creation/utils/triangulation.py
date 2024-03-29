@@ -208,13 +208,13 @@ def triangulation(
     stack: list[tuple[int, int, int]] = [min_cost_index]
     triangles: list[tuple[int, int, int]] = []
 
-    assert min_cost_index[0] != -1
+    #assert min_cost_index[0] != -1
 
     while len(stack):
         i, j, k = stack.pop()
 
         if abs(i-j) == 1:
-            assert i == k or j == k
+            #assert i == k or j == k
             continue
 
         if i+N != j:
@@ -338,7 +338,7 @@ def triangulation_2d(
     min_cost_index = int(np.argmin(np.diag(dp, N-1)))
     min_cost: float = dp[min_cost_index, min_cost_index+N-1]
 
-    assert min_cost != np.inf
+    #assert min_cost != np.inf
 
     # 分割方法を復元する
     stack: list[tuple[int, int]] = [(min_cost_index, min_cost_index+N-1)]

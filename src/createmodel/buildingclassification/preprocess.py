@@ -3,8 +3,71 @@ import cv2
 import numpy as np
 import numpy.typing as npt
 import shapely.geometry as geo
+from shapely.geometry import Point
+from sklearn.neighbors import NearestNeighbors
+import laspy
+import re
+import math
 
 from ..lasmanager import PointCloud
+
+# LAS
+def write_las(fpath, xyz, rgb=None, classification=None):
+    x = xyz[:,0]
+    y = xyz[:,1]
+    z = xyz[:,2]
+
+    if re.match('^1\.', laspy.__version__):
+        header = laspy.header.Header(file_version=1.2, point_format=2)
+        las_file = laspy.file.File(fpath, mode='w', header=header)
+
+        las_file.header.scale = [0.01, 0.01, 0.01]
+        las_file.header.min = [np.min(x), np.min(y), np.min(z)]
+        las_file.header.max = [np.max(x), np.max(y), np.max(z)]
+        las_file.header.offset = [(np.min(x) + np.max(x)) / 2, 
+                                  (np.min(y) + np.max(y)) / 2,
+                                  (np.min(z) + np.max(z)) / 2]
+
+        # data
+        las_file.x = x
+        las_file.y = y
+        las_file.z = z
+
+        if rgb is not None:
+            las_file.red = rgb[:,0]
+            las_file.green = rgb[:,1]
+            las_file.blue = rgb[:,2]
+
+        if classification is not None:
+            las_file.raw_classification = classification.astype(np.uint16)
+
+        las_file.close() 
+
+    if re.match('^2\.', laspy.__version__):
+        header = laspy.LasHeader(version='1.2', point_format=2)
+        header.scales = [0.01, 0.01, 0.01]
+        header.mins = [np.min(x), np.min(y), np.min(z)]
+        header.maxs = [np.max(x), np.max(y), np.max(z)]
+        header.offsets = [(np.min(x) + np.max(x)) / 2, 
+                          (np.min(y) + np.max(y)) / 2,
+                          (np.min(z) + np.max(z)) / 2]
+
+        las_file = laspy.LasData(header=header)
+
+        # data
+        las_file.x = x
+        las_file.y = y
+        las_file.z = z
+
+        if rgb is not None:
+            las_file.red = rgb[:,0]
+            las_file.green = rgb[:,1]
+            las_file.blue = rgb[:,2]
+
+        if classification is not None:
+            las_file.raw_classification = classification.astype(np.uint16)
+    
+        las_file.write(fpath) 
 
 
 class Preprocess:
@@ -76,33 +139,64 @@ class Preprocess:
         self,
         cloud: PointCloud,
         rotation_angle: float,
+        footprint: geo.Polygon
     ) -> npt.NDArray[np.uint8]:
         """点群を回転させ、画像に変換する
 
         Args:
             cloud(PointCloud): 点群
             rotation_angle(float): 回転角度 (degree)
+            footprint(geo.Polygon): 建物外形ポリゴン
 
         Returns:
             NDArray[np.uint8]: 回転後の建物画像 (128, 128, 3)
         """
 
-        xyz = cloud.get_points().copy()
-        rgb = cloud.get_colors().copy()
+        if False:
+            xyz = cloud.get_points().copy()
+            rgb = cloud.get_colors().copy()        
 
-        x_min = np.min(xyz[:, 0])
-        y_max = np.max(xyz[:, 1])
+            x_min = np.min(xyz[:, 0])
+            y_max = np.max(xyz[:, 1])
 
-        # 回転前画像の作成
-        pixel_xy = np.dstack([
-            (xyz[:, 0] - x_min) / self._grid_size,
-            (y_max - xyz[:, 1]) / self._grid_size,
-        ])[0, :, :]
-        pixel_xy = np.round(pixel_xy).astype(np.int_)
+            # 回転前画像の作成
+            pixel_xy = np.dstack([
+                (xyz[:, 0] - x_min) / self._grid_size,
+                (y_max - xyz[:, 1]) / self._grid_size,
+            ])[0, :, :]
+            pixel_xy = np.round(pixel_xy).astype(np.int_) 
 
-        width, height = pixel_xy.max(axis=0) + np.array([1, 1])
-        img_rgb = np.zeros((height, width, 3), np.uint8)
-        img_rgb[pixel_xy[:, 1], pixel_xy[:, 0]] = rgb / 255.
+            width, height = pixel_xy.max(axis=0) + np.array([1, 1])
+            img_rgb = np.zeros((height, width, 3), np.uint8)
+            img_rgb[pixel_xy[:, 1], pixel_xy[:, 0]] = rgb / 255.
+
+        else:
+            # 回転前画像の作成
+            pc_xyz = cloud.get_points().copy()
+            pc_rgb = cloud.get_colors().copy()
+
+            pc_x_min, pc_y_min, _ = pc_xyz.min(axis=0)
+            pc_x_max, pc_y_max, _ = pc_xyz.max(axis=0)
+
+            width = math.ceil((pc_x_max - pc_x_min) / self._grid_size) + 1
+            height = math.ceil((pc_y_max - pc_y_min) / self._grid_size) + 1
+        
+            xs = np.arange(width) * self._grid_size + pc_x_min
+            ys = -np.arange(height) * self._grid_size + pc_y_max 
+            xx, yy = np.meshgrid(xs, ys)
+            xy = np.dstack([xx, yy]).reshape(-1,2)
+
+            nn = NearestNeighbors(n_neighbors=1, algorithm='kd_tree', leaf_size=30, n_jobs=4)
+            nn.fit(pc_xyz[:,0:2])
+            inds = nn.kneighbors(xy, return_distance=False)[:, 0]
+
+            img_rgb = pc_rgb[inds] / 256
+            for i, xy_ in enumerate(xy):
+                p = Point(xy_[0], xy_[1]) 
+                if not footprint.contains(p):
+                    img_rgb[i] = 0
+
+            img_rgb = img_rgb.reshape(height, width, 3).astype(np.uint8)
 
         # 回転行列
         center = [width/2, height/2]
@@ -153,6 +247,6 @@ class Preprocess:
         """
 
         rotation_angle = self._calc_rotation_angle(shape)
-        rotated_image = self._rotate_point_cloud(cloud, rotation_angle)
+        rotated_image = self._rotate_point_cloud(cloud, rotation_angle, shape)
 
         return rotated_image

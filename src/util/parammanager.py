@@ -64,6 +64,7 @@ class ParamManager:
     KEY_CAMERA_INFO_PATH = 'CameraInfoPath'
     KEY_OUTPUT_FOLDER_PATH = 'OutputFolderPath'
     KEY_OUTPUT_OBJ = 'OutputOBJ'
+    KEY_OUTPUT_TEXTURE = 'OutputTexture'
     KEY_OUTPUT_LOG_FOLDER_PATH = 'OutputLogFolderPath'
     KEY_DEBUG_LOG_OUTPUT = 'DebugLogOutput'
     KEY_PHASE_CONSISTENCY = 'PhaseConsistency'
@@ -83,6 +84,7 @@ class ParamManager:
         KEY_CAMERA_INFO_PATH,
         KEY_OUTPUT_FOLDER_PATH,
         KEY_OUTPUT_OBJ,
+        KEY_OUTPUT_TEXTURE,
         KEY_OUTPUT_LOG_FOLDER_PATH,
         KEY_DEBUG_LOG_OUTPUT,
         KEY_PHASE_CONSISTENCY]
@@ -99,6 +101,8 @@ class ParamManager:
     DEFALT_PHASE_CONSISTENCY_NON_PLANE_ANGLE = 20
     # objファイル出力のデフォルト値
     DEFALT_OUTPUT_OBJ = False
+    # テクスチャ出力のデフォルト値
+    DEFALT_OUTPUT_TEXTURE = True
     # LASのXY座標swapフラグ
     DEFALT_LAS_SWAP_XY = False
 
@@ -126,6 +130,7 @@ class ParamManager:
         self.non_plane_angle \
             = ParamManager.DEFALT_PHASE_CONSISTENCY_NON_PLANE_ANGLE
         self.output_obj = ParamManager.DEFALT_OUTPUT_OBJ    # obj出力フラグ
+        self.output_texture = ParamManager.DEFALT_OUTPUT_TEXTURE
         # lasのxy座標のswapフラグ
         self.las_swap_xy = ParamManager.DEFALT_LAS_SWAP_XY
         # 外部標定要素から算出する回転行列のモード
@@ -189,6 +194,7 @@ class ParamManager:
             self.camera_info_path = jsonLoad[self.KEY_CAMERA_INFO_PATH]
             self.output_folder_path = jsonLoad[self.KEY_OUTPUT_FOLDER_PATH]
             self.output_obj = jsonLoad[self.KEY_OUTPUT_OBJ]
+            self.output_texture = jsonLoad[self.KEY_OUTPUT_TEXTURE]
             self.output_log_folder_path = jsonLoad[
                 self.KEY_OUTPUT_LOG_FOLDER_PATH]
             self.debug_log_output = jsonLoad[self.KEY_DEBUG_LOG_OUTPUT]
@@ -334,6 +340,16 @@ class ParamManager:
             # エラー対応(途中終了)に変更
             raise Exception(
                 ParamManager.KEY_OUTPUT_OBJ + ' is invalid.')
+
+        if (type(self.output_texture) is not bool):
+            # self.output_texture = ParamManager.DEFALT_OUTPUT_TEXTURE
+            # change_params.append(
+            #     ParamManager.ChangeParam(
+            #         ParamManager.KEY_OUTPUT_TEXTURE,
+            #         ParamManager.DEFALT_OUTPUT_TEXTURE))
+            # エラー対応(途中終了)に変更
+            raise Exception(
+                ParamManager.KEY_OUTPUT_TEXTURE + ' is invalid.')
 
         if (type(self.las_swap_xy) is not bool):
             # self.las_swap_xy = ParamManager.DEFALT_LAS_SWAP_XY

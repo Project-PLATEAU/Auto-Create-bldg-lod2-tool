@@ -17,15 +17,16 @@ class ClassifierModel(torch.nn.Module):
         """
 
         super(ClassifierModel, self).__init__()
-        self.model = models.resnet34(weights=None, num_classes=n_classes)
-        self.model.conv1 = torch.nn.Conv2d(
-            in_channels,
-            self.model.conv1.out_channels,
-            kernel_size=7,
-            stride=2,
-            padding=3,
-            bias=False
-        )
+        #self.model = models.resnet34(weights=None, num_classes=n_classes)
+        self.model = models.resnet50(weights=None, num_classes=n_classes)
+        #self.model.conv1 = torch.nn.Conv2d(
+        #    in_channels,
+        #    self.model.conv1.out_channels,
+        #    kernel_size=7,
+        #    stride=2,
+        #    padding=3,
+        #    bias=False
+        #)
 
     def forward(self, x):
         """順伝搬

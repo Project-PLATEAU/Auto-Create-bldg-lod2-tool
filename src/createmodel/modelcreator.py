@@ -111,7 +111,7 @@ class ModelCreator:
 
         warn_flag = False
         for gml in gmls:
-            try:
+            try:                 
                 if gml.read_lod0_model is ProcessResult.ERROR:
                     # lod0データがない場合skip
                     gml.create_lod2_model = ProcessResult.SKIP
@@ -142,6 +142,7 @@ class ModelCreator:
             except CreateModelException as e:
                 # モデル作成のエラー(想定エラー)
                 msg = '{}, {}'.format(gml.build_id, e)
+                print(msg)
                 Log.output_log_write(
                     LogLevel.MODEL_ERROR, ModuleType.MODEL_ELEMENT_GENERATION,
                     msg)
@@ -150,6 +151,7 @@ class ModelCreator:
             except Exception as e:
                 # 予期せぬエラー
                 msg = '{}\n{}'.format(gml.build_id, traceback.format_exc())
+                print(msg)
                 Log.output_log_write(
                     LogLevel.MODEL_ERROR,
                     ModuleType.MODEL_ELEMENT_GENERATION,

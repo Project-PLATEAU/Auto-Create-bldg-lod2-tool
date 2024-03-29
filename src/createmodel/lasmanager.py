@@ -431,6 +431,15 @@ class LasManager:
                         [las.red, las.green, las.blue],
                         axis=0).transpose((1, 0))
 
+                    # 8bitデータ対応
+                    if np.max(colors) < 256: # 8bit画像？
+                        colors *= 256
+                else:
+                    msg = '{}.{}, {}'.format(
+                        class_name, func_name,
+                        CreateModelMessage.ERR_MSG_LAS_MNG_UNSUPPORTED_LAS_FORMAT)
+                    raise CreateModelException(msg)
+
                 # polygonの最小外接長方形でpointをfilterする
                 polygon_mbr: tuple[float, float, float, float] = (
                     self._ground_polygon
@@ -457,6 +466,11 @@ class LasManager:
                         # polygon内の点のみ取得
                         ex_colors = colors[conv_ret[:, 0] == 1]
                         cloud.add_colors(colors=ex_colors)
+                    else:
+                        msg = '{}.{}, {}'.format(
+                            class_name, func_name,
+                            CreateModelMessage.ERR_MSG_LAS_MNG_UNSUPPORTED_LAS_FORMAT)
+                        raise CreateModelException(msg)
 
                     if self._is_search_ground:
                         # 地面探索範囲内の点のみ取得

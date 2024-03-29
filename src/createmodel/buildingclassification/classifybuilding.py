@@ -3,9 +3,11 @@ import shapely.geometry as geo
 from .classifier import BuildingClass, Classifier
 from ..lasmanager import PointCloud
 from .preprocess import Preprocess
-
+import cv2 as cv   
+import os
 
 def ClassifyBuilding(
+    building_id: str,
     cloud: PointCloud,
     shape: geo.Polygon,
     classifier_checkpoint_path: str,
@@ -16,6 +18,7 @@ def ClassifyBuilding(
     """建物の分類を行う
 
     Args:
+        building_id(str): 建物ID
         cloud(PointCloud): 建物点群
         shape(Polygon): 建物外形ポリゴン
         classifier_checkpoint_path(str): 建物分類の学習済みモデルファイルパス
@@ -41,7 +44,7 @@ def ClassifyBuilding(
     building_img = preprocess.preprocess(
         cloud,
         shape,
-    )
+    ) 
 
     classifier = Classifier(
         classifier_checkpoint_path,
