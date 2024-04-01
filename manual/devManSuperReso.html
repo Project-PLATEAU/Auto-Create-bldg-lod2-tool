@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>環境構築手順書 </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="環境構築手順書 ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../resources/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="環境構築手順書">環境構築手順書</h1>
+
+<h1 id="1-本書について">1 本書について</h1>
+<p>本書では、建物テクスチャ視認性向上ツール(以下「本ツール」という。)の環境構築手順について記載しています。</p>
+<h1 id="2-動作環境">2 動作環境</h1>
+<p>本ツールの動作環境は以下のとおりです。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>推奨動作環境</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>Microsoft Windows 10 または 11</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel Core i7-11700F以上</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>16GB以上</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>NVIDIA Quadro RTX 5000以上</td>
+</tr>
+<tr>
+<td>GPU Memory</td>
+<td>16GB以上</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-ソフトウェア環境">3 ソフトウェア環境</h2>
+<p>本ツールの使用言語は、Python（バージョン3.9）です。使用ライブラリを以下に示します。</p>
+<p>&lt;ライブラリ一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>ライブラリ名</th>
+<th>バージョン</th>
+<th>ライセンス</th>
+<th>使用用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tqdm</td>
+<td>4.63.0</td>
+<td>MIT License, Mozilla Public License 2.0</td>
+<td>プログレスバーの表示</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>1.21.5</td>
+<td>BSD License (BSD-3-Clause)</td>
+<td>数値計算</td>
+</tr>
+<tr>
+<td>Pillow</td>
+<td>9.0.1</td>
+<td>Historical Permission Notice and Disclaimer</td>
+<td>画像の読み書き</td>
+</tr>
+<tr>
+<td>PyYAML</td>
+<td>6.0</td>
+<td>MIT License</td>
+<td>yamlファイルの読み書き</td>
+</tr>
+<tr>
+<td>torch</td>
+<td>1.12.1</td>
+<td>BSD License (BSD-3-Clause)</td>
+<td>機械学習</td>
+</tr>
+<tr>
+<td>torchvision</td>
+<td>0.13.1</td>
+<td>BSD</td>
+<td>機械学習</td>
+</tr>
+<tr>
+<td>lightning</td>
+<td>1.9.5</td>
+<td>Apache Software License (Apache-2.0)</td>
+<td>機械学習</td>
+</tr>
+<tr>
+<td>opencv-python</td>
+<td>4.5.4.60</td>
+<td>Apache Software License (Apache-2.0)</td>
+<td>画像の読み書き、画像処理</td>
+</tr>
+<tr>
+<td>networkx</td>
+<td>2.6.3</td>
+<td>BSD License</td>
+<td>グラフ構造の管理</td>
+</tr>
+<tr>
+<td>openmim</td>
+<td>0.3.6</td>
+<td>Apache 2.0 license</td>
+<td>OpenMMLabライブラリの管理</td>
+</tr>
+<tr>
+<td>mmcv</td>
+<td>2.0.0rc4</td>
+<td>Apache Software License</td>
+<td>機械学習</td>
+</tr>
+<tr>
+<td>mmedit</td>
+<td>1.0.0rc5</td>
+<td>Apache Software License (Apache-2.0)</td>
+<td>機械学習</td>
+</tr>
+<tr>
+<td>mmengine</td>
+<td>0.10.1</td>
+<td>Apache Software License (Apache-2.0)</td>
+<td>機械学習</td>
+</tr>
+</tbody>
+</table>
+<h1 id="4-環境構築">4 環境構築</h1>
+<h2 id="4-1-ツール構成">4-1 ツール構成</h2>
+<p>本ツールは、下図に示す通りLOD2建築物モデル自動作成ツールのリポジトリ内に存在します。
+また、本ツールは、屋根面視認性向上ツールと壁面視認性向上ツールで構成されています。</p>
+<p><a id="main_repo"></a>
+&lt;リポジトリ構成&gt;</p>
+<p><img src="../resources/devManSuperReso/devManSuperReso_001.png" alt="リポジトリ構成"></p>
+<p>&lt;屋根面視認性向上ツール構成&gt;</p>
+<p><img src="../resources/devManSuperReso/devManSuperReso_002.png" alt="屋根面視認性向上ツール構成"></p>
+<p>&lt;壁面視認性向上ツール構成&gt;
+<img src="../resources/devManSuperReso/devManSuperReso_003.png" alt="壁面視認性向上ツール構成"></p>
+<h2 id="4-2-リポジトリのクローン">4-2 リポジトリのクローン</h2>
+<p>以下のコマンドでリポジトリをクローンします。 <br>
+リポジトリの構成は<a href="#main_repo">こちら</a>を参照してください。</p>
+<pre><code>&gt; git clone https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool.git
+</code></pre>
+<h2 id="4-3-aiモデルパラメータのダウンロード">4-3 AIモデルパラメータのダウンロード</h2>
+<p>本ツールに搭載されているAIモデルのパラメータをダウンロードします。</p>
+<h3 id="4-3-1-屋根面視認性向上用モデル">4-3-1 屋根面視認性向上用モデル</h3>
+<p>屋根面視認性向上用モデル（ファイル名：iter_280000_conv.pth）をダウンロードします。</p>
+<p><a href="https://drive.google.com/file/d/1xBFAVgGeIGFsvMN6bG_Y9renLyNm46is/view?usp=drivesdk">https://drive.google.com/file/d/1xBFAVgGeIGFsvMN6bG_Y9renLyNm46is/view?usp=drivesdk</a></p>
+<p>ダウンロードしたファイルは下図の位置に保存します。</p>
+<p><img src="../resources/devManSuperReso/devManSuperReso_004.png" alt="屋根面視認性向上用モデルの設置位置"></p>
+<h3 id="4-3-2-壁面視認性向上用モデル">4-3-2 壁面視認性向上用モデル</h3>
+<p>壁面視認性向上用モデル（ファイル名：latest_net_G_A.pth）をダウンロードします。</p>
+<p><a href="https://drive.google.com/file/d/14tsr1r1s6aI6fm-cX7ZfcGr-56SdiTid/view?usp=drivesdk">https://drive.google.com/file/d/14tsr1r1s6aI6fm-cX7ZfcGr-56SdiTid/view?usp=drivesdk</a></p>
+<p>ダウンロードしたファイルは下図の位置に保存します。</p>
+<p><img src="../resources/devManSuperReso/devManSuperReso_005.png" alt="壁面視認性向上用モデルの設置位置"></p>
+<h1 id="5-仮想環境の作成">5 仮想環境の作成</h1>
+<p>専用環境を作成しツールを実行する場合、仮想環境を構築することを推奨します。<br>
+例として以下にvenvを使用した仮想環境の作成手順を示します。<br>
+venv は Python の標準ツールであるため、インストールは不要です。なお、コマンドプロンプト上での操作とします。</p>
+<h2 id="5-1-作成">5-1 作成</h2>
+<p>以下のコマンドを使用し、仮想環境を作成します。一度実施すれば良いです。</p>
+<pre><code>&gt; cd [仮想環境を作成するフォルダパス]
+&gt; py -[Pythonのインストールバージョン] -m venv [仮想環境名]
+</code></pre>
+<p>[Pythonのインストールバージョン]：例として「3.9」など<br>
+[仮想環境名]：任意の名称</p>
+<h2 id="5-2-切り替え">5-2 切り替え</h2>
+<p>以下のコマンドを使用し、作成した環境へ切り替えを行います。</p>
+<pre><code>&gt; cd [仮想環境を作成したフォルダパス]
+&gt; [仮想環境名]\Scripts\activate.bat
+</code></pre>
+<p>[仮想環境名]：作成した仮想環境名</p>
+<h2 id="5-3-終了">5-3 終了</h2>
+<p>仮想環境を終了する場合には以下のコマンドを使用し、切り替えた環境を終了します。<br>
+このまま環境構築を実施する場合には終了する必要はありません。</p>
+<pre><code>&gt; deactivate
+</code></pre>
+<h1 id="6-依存ライブラリのインストール">6 依存ライブラリのインストール</h1>
+<p>以下コマンドを使用して、仮想環境に依存ライブラリをインストールします。<br>
+requirements.txtは、本ツールのソースコードに同梱しています。</p>
+<pre><code>&gt; pip install –r requirements.txt
+</code></pre>
+<h1 id="7-gpu環境の構築">7 GPU環境の構築</h1>
+<p>GPU環境の構築方法を以下に示します。なお、手順7-1～7-4はPCに対して一度設定すれば良いです。<br>
+手順7-5以降に関しては、仮想環境ごとに設定する必要があります。</p>
+<p>[GPU環境構築時の注意点]</p>
+<p>仮想環境に、torch、 torchvisionライブラリ、拡張モジュールをインストールする作業は、システム環境の構築後に行う必要があります。</p>
+<h2 id="7-1-build-tools-for-visual-studioのインストール">7-1 Build Tools for Visual Studioのインストール</h2>
+<p>以下より、Build Tools for Visual Studio 2017、または、Build Tools for Visual Studio 2019をダウンロードし、インストールします。<br>
+なお、Visual Studio 2017 、または、Visual Studio 2019のインストールでも良いです。</p>
+<p><a href="https://visualstudio.microsoft.com/ja/downloads/">https://visualstudio.microsoft.com/ja/downloads/</a></p>
+<h2 id="7-2-cuda-toolkit-113のインストール">7-2 cuda toolkit 11.3のインストール</h2>
+<p>以下より、cuda toolkit 11.3 をダウンロードし、インストールします。<br>
+なお、インストールオプションはデフォルト値のままで良いです。</p>
+<p><a href="https://developer.nvidia.com/cuda-11.3.0-download-archive?target_os=Windows&amp;target_arch=x86_64&amp;target_version=10&amp;target_type=exe_local">https://developer.nvidia.com/cuda-11.3.0-download-archive?target_os=Windows&amp;target_arch=x86_64&amp;target_version=10&amp;target_type=exe_local</a></p>
+<h2 id="7-3-cudnnのインストール">7-3 cuDNNのインストール</h2>
+<p>以下よりcuDNNをダウンロードします。</p>
+<p><a href="https://developer.nvidia.com/rdp/cudnn-download">https://developer.nvidia.com/rdp/cudnn-download</a></p>
+<p>ダウンロードした「cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip」を解凍します。<br>
+解凍したファイルを「C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3」以下の該当フォルダにコピーします。</p>
+<p>&lt;cuDNNのインストール&gt;</p>
+<p><img src="../resources/devManLod2Bldg/devManLod2Bldg_002.png" alt=""> <!-- 画像はLOD2建物ツールを流用 --></p>
+<h2 id="7-4-システム環境変数の追加">7-4 システム環境変数の追加</h2>
+<p>システム環境変数に、以下の4変数を登録します。4変数の値は、共通とします。</p>
+<table>
+<thead>
+<tr>
+<th>変数名</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUDA_HOME, CUDA_PATH, CUDNN_HOME, CUDNN_PATH</td>
+<td>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;GPU環境構築におけるシステム環境変数の登録&gt;</p>
+<p><img src="../resources/devManLod2Bldg/devManLod2Bldg_003.png" alt=""> <!-- 画像はLOD2建物ツールを流用 --></p>
+<h2 id="7-5-torch-torchvisionのインストール">7-5 torch, torchvisionのインストール</h2>
+<p>仮想環境に、torch, torchvisionをインストールします。</p>
+<pre><code>&gt; pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
+</code></pre>
+<p>&lt;torch, torchvisionのインストール&gt;</p>
+<p><img src="../resources/devManLod2Bldg/devManLod2Bldg_004.png" alt=""> <!-- 画像はLOD2建物ツールを流用 --></p>
+<h2 id="7-6-拡張モジュールのインストール">7-6 拡張モジュールのインストール</h2>
+<p>「src\createmodel\housemodeling\roof_edge_detection_model\thirdparty\heat\models\ops」フォルダをコピーし、任意のフォルダに貼り付けます。(opsフォルダのパスを短くすることが目的です。) <br>
+仮想環境にて、拡張モジュールのビルドとインストールを行います。</p>
+<pre><code>&gt; cd F:\ops
+&gt; python setup.py build
+&gt; python setup.py install
+</code></pre>
+<p>&lt;拡張モジュールのインストール &gt;</p>
+<p><img src="../resources/devManLod2Bldg/devManLod2Bldg_005.png" alt=""> <!-- 画像はLOD2建物ツールを流用 --></p>
+<p>インストール後、pip listコマンドにて「MultiScaleDeformableAttention」が一覧に表示されていれば、拡張モジュールのインストールが完了している状態です。</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

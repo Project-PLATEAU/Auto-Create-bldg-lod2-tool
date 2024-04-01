@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>操作マニュアル </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="操作マニュアル ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../resources/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="操作マニュアル">操作マニュアル</h1>
+
+<h1 id="1-本書について">1 本書について</h1>
+<p>本書では、建物テクスチャアトラス化ツール（以下「本ツール」という。）の操作手順について記載しています。</p>
+<h1 id="2-アトラス化ツールについて">2 アトラス化ツールについて</h1>
+<p>本ツールは、PLATEAUが採用する都市スケールのデータセット単位（CityGML2.0）におけるAppearanceクラスのアトラス化処理を行うツールです。Appearanceクラスには、テクスチャ画像ファイル名や座標情報等、テクスチャに関する属性が記述されています。<br>
+建物テクスチャは、建物1棟に対して1つの画像ファイルを貼付する手法が主流となっていますが、1棟1画像ファイルとすると、画像ファイル数が多くなり、描画時の画像参照（読込）に時間を要することが課題です。<br>
+そこで、1棟1画像ファイルのCityGML2.0から、複数棟1画像ファイルへ統合するアトラス化ツールを開発しました。本ドキュメントはアトラス化ツールの利用に関するマニュアルです。</p>
+<h1 id="3-機能概要">3 機能概要</h1>
+<p>本ツールは、令和4年度に整備されたCityGML2.0と紐づく、テクスチャ画像ファイル（1ファイルに対し建物1棟）のデータを対象とします。テクスチャ画像の形式はJPG/PNGです。</p>
+<p>&lt;再アトラス化ツールの処理フロー&gt;</p>
+<p><img src="../resources/userManAtlas/userManAtlas_001.png" alt=""></p>
+<ol>
+<li>CityGML読込<br>
+建物LOD2のCityGMLを読み込みます。建物内でポリゴン高さ順にソートし、建物座標からまとめる範囲を計算します。</li>
+<li>画像再配置<br>
+入力した画像を一定の範囲ごとに集約し、再配置した画像を作成します。再配置では画像の回転等は行わず、そのまま配置します。範囲は5次メッシュ相当を一定で分割した範囲の建物を2048以下の画像にアトラス化します。大型の建物では1棟で規定の画像サイズを超える場合もあり、その場合はアトラス化対象から自動除外します。</li>
+<li>画像テクスチャ座標計算<br>
+アトラス化した画像におけるUV座標を算出します。</li>
+<li>CityGML出力<br>
+画像座標(UV)と参照画像URIを更新します。</li>
+</ol>
+<h1 id="4-入力ファイル">4 入力ファイル</h1>
+<p>本ツールは、CityGML2.0に記載されている画像ファイル名とポリゴン名を、再編した後のデータに差し替える処理を行います。入力するデータ一覧を、以下に示します。</p>
+<p>&lt;再アトラス化ツールの入力データ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>入力データ</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CityGML2.0</td>
+<td>GML形式及び、Appearanceの画像一式</td>
+</tr>
+<tr>
+<td>パラメータファイル</td>
+<td>再アトラス化を処理するためのパラメータ情報ファイル（JSON形式）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>CityGML2.0<br>
+入力に使用するCityGML2.0のフォルダ構造例を下図に示します。なお、再アトラス化ツールの出力フォルダ構成は、入力するCityGML2.0のファイル構成と同じであり、CityGMLファイル及びappearance画像一式のフォルダを出力します。<br>
+CityGMLで指定する画像のポリゴン座標はUV座標に変換した際に0～1になることとします。(負数は非対応とします。)</li>
+</ul>
+<p>&lt;再アトラス化ツールの入力サンプル（CityGML2.0フォルダ構成）&gt;</p>
+<p><img src="../resources/userManAtlas/userManAtlas_002.png" alt=""></p>
+<ul>
+<li>パラメータファイル（param.json）<br>
+パラメータを記載したparam.jsonファイルは、使用環境に合わせて編集することができます。パラメータファイルには、入出力フォルダの相対パスおよび、内部で使用する各種パラメータを記載する必要があります。</li>
+</ul>
+<p>&lt;再アトラス化ツールの可変内部パラメータファイルサンプル&gt;</p>
+<p><img src="../resources/userManAtlas/userManAtlas_003.png" alt=""></p>
+<ul>
+<li><p>入力フォルダパス(InputGMLFolderPath)<br>
+CityGML2.0フォルダ構成の「INPUT」を示します。「INPUT」フォルダには、CityGMLファイルを格納してあるものとします。</p>
+</li>
+<li><p>出力フォルダパス（OutputGMLFolderPath）<br>
+アトラス化したCityGMLファイルを保存するフォルダを設定します。パスを記載すると自動的に作成されます。<br>
+実行する度にフォルダを作成するため、2度実行する場合は初めに保存したファイルは削除されます。</p>
+</li>
+<li><p>作成画像ファイルの幅（OutputWidth）<br>
+出力する画像ファイルの幅（単位：ピクセル）を設定します。<br>
+2の累乗の数値を指定します。</p>
+</li>
+<li><p>作成画像ファイルの高さ（OutputHeight）<br>
+出力する画像ファイルの高さ（単位：ピクセル）を設定します。<br>
+2の累乗の数値を指定します。</p>
+</li>
+<li><p>作成画像の背景色（BackGroundColor）<br>
+出力する画像の背景色を設定します。<br>
+0(黒)～255(白) の数値を指定します。</p>
+</li>
+<li><p>ポリゴン余白（Extentpixel）<br>
+元画像から画像を切り出す際、外側を余分に切り取る場合幅（単位：ピクセル）を設定します。<br>
+描画時にポリゴン境目がスムーズになるように、元画像を大きめに切り出す際に使用します。不要な場合は0を指定します。</p>
+</li>
+</ul>
+<h1 id="5-アトラス化の実行">5 アトラス化の実行</h1>
+<h2 id="5-1-ツールの実行">5-1 ツールの実行</h2>
+<p>コマンドライン実行で、再アトラス化を行います。コマンドライン実行に使用するアプリは、Windows PowerShellまたはコマンドプロンプト等のターミナルの使用を想定します。<br>
+構築した環境へアクセスして、コマンドラインで実行します。処理が完了すると、可変内部パラメータファイル(.json)に記載した出力フォルダへ、再アトラス化されたCityGML2.0が保存されます。</p>
+<p><img src="../resources/userManAtlas/userManAtlas_004.png" alt=""></p>
+<p>&lt;アトラス化後のCityGMLファイル例&gt;</p>
+<p><img src="../resources/userManAtlas/userManAtlas_005.png" alt=""></p>
+<h2 id="5-2-実行時間の目安">5-2 実行時間の目安</h2>
+<p>表に示すデータおよびPCを使用した場合の実行時間は約25分です。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>名称</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>検証データ</td>
+<td>渋谷区データ</td>
+<td>CityGML4ファイル、画像容量：500MB</td>
+</tr>
+<tr>
+<td>PCスペック</td>
+<td>プロセッサ</td>
+<td>Intel Xeon W-2123 CPU@3.60GHz 3.60GHz</td>
+</tr>
+<tr>
+<td></td>
+<td>実装RAM</td>
+<td>16.0GB</td>
+</tr>
+<tr>
+<td></td>
+<td>OS</td>
+<td>Windows10 Pro（21H2）</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

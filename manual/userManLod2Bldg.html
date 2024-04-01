@@ -1,0 +1,1278 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>操作マニュアル </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="操作マニュアル ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../resources/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="操作マニュアル">操作マニュアル</h1>
+
+<h1 id="1-本書について">1 本書について</h1>
+<p>本書は、LOD2建築物モデル自動作成ツール（以下、「本ツール」という。）の操作手順について記載しています。</p>
+<h1 id="2-システム概要">2 システム概要</h1>
+<p>本ツールはDSM点群や建物外形データ等を入力としてLOD2建物形状のモデル作成を行い、CityGML 形式にて建物形状データを出力する機能を持つツールです。 <br>
+本ツールは、①CityGML入力機能、②モデル要素生成機能、③位相一貫性チェック・補正機能、④テクスチャ貼付け機能、⑤CityGML出力機能の5つの機能から構成されます。各機能は独立していて、入力されたデータは順番に処理されます。 <br>
+ツール構成図を以下に示します。</p>
+<p>&lt;ツール構成図&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_001.png" alt="ツール構成図"></p>
+<h1 id="3-システム入力">3 システム入力</h1>
+<p>入力ファイルのパスをあらかじめ設定パラメータファイルに記載し、これをツール実行時に読み込ませることで情報の入力を行います。 <br>
+以下に入力情報の概要図を記載します。</p>
+<p>&lt;入力ファイル概要図&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_002.png" alt="入力ファイル概要図"></p>
+<h2 id="3-1-入力ファイル一覧">3-1 入力ファイル一覧</h2>
+<p>以下に本ツールの入力ファイルを記載します。</p>
+<p>&lt;入力ファイル一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名</th>
+<th>入力元</th>
+<th>ファイルフォーマット</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>設定パラメータファイル</td>
+<td>ツール実行時にコンソール指定</td>
+<td>jsonファイル</td>
+<td>・ツール実行時に使用するパラメータを記載するファイル（詳細は<a href="#3-2-%E8%A8%AD%E5%AE%9A%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">3-2 設定パラメータファイル</a>参照）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LOD1 CityGMLファイル</td>
+<td>設定パラメータファイル<br>“CityGMLFolderPath”キーに入力CityGMLフォルダパスを指定</td>
+<td>CityGMLファイル</td>
+<td>・建物外形データ<br>・建物IDを入力するためのファイル</td>
+</tr>
+<tr>
+<td>3</td>
+<td>航空写真(原画像)ファイル群</td>
+<td>設定パラメータファイル<br>“TextureFolderPath”キーにフォルダ名を指定</td>
+<td>TIFFファイル</td>
+<td>・入力LOD1 CityGMLファイル情報と関連のある航空写真(原画像)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>航空写真DSM点群ファイル群</td>
+<td>設定パラメータファイル<br>“DsmFolderPath”キーにフォルダ名を指定</td>
+<td>lasファイル(バージョンは、1.2～1.4に対応)</td>
+<td>・航空写真(原画像)からSfM処理にて作成されたDSM点群データファイル群<br>・建物の地面の高さを建物外形の外側近傍範囲にある点群データを使用して決定する関係上、航空写真DSM点群のデータ範囲は建物外形のデータ範囲より一回り大きな範囲のデータであることが望ましいです。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>外部標定パラメータファイル</td>
+<td>設定パラメータファイル<br>“ExternalCalibElementPath”キーにファイル名を指定</td>
+<td>txtファイル</td>
+<td>・航空写真(原画像)からSfM処理にて作成された外部標定パラメータデータを変換したファイル<br>・対象となる航空写真枚数分の情報が記載されています。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>内部標定パラメータファイル</td>
+<td>設定パラメータファイル<br>“CameraInfoPath”キーにファイル名を指定</td>
+<td>txtファイル</td>
+<td>・航空写真(原画像)からSfM処理にて作成された内部標定パラメータデータを変換したファイル<br>・航空写真撮影に使用した航空カメラに関する情報が記載されています。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-2-設定パラメータファイル">3-2 設定パラメータファイル</h2>
+<p>本ツール実行時に使用するパラメータを記載するファイルです。</p>
+<p>&lt;設定パラメータファイルの仕様&gt;</p>
+<table>
+<thead>
+<tr>
+<th>ファイル形式</th>
+<th>ファイル名</th>
+<th>格納フォルダ</th>
+<th>入力先</th>
+<th>特記事項</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td>param.json</td>
+<td>任意</td>
+<td>システム全般</td>
+<td>文字コードはUTF-8とします。</td>
+</tr>
+</tbody>
+</table>
+<p>設定パラメータファイルのパラメータ一覧を以下に記載します。</p>
+<p>&lt;設定パラメータ一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>キー名</th>
+<th>値形式</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>LasCoordinateSystem</td>
+<td>数値</td>
+<td>航空写真DSM点群の平面直角座標系の番号です。<br>1～19の数値にて指定します。<br>未記入および1～19以外の値が入力された場合は無効とし、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DsmFolderPath</td>
+<td>文字列</td>
+<td>航空写真DSM点群のフォルダパスを指定します。<br>指定されたフォルダパスが存在しない場合は無効とし、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LasSwapXY</td>
+<td>真偽値</td>
+<td>LASファイルのXY座標を入れ替えて使用するか否かを切り替えるフラグです。設定値がtrueの場合は、LASファイルのXY座標を入れ替えます。<br>システム内部座標系が、xが東方向、yが北方向の値のため、LASファイル座標系が同一座標系となるようにユーザーがフラグを切り替える必要があります。<br>未記入、または、真偽値以外の値が入力された場合は、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CityGMLFolderPath</td>
+<td>文字列</td>
+<td>入力CityGMLフォルダパスを指定します。<br>未記入および指定されたフォルダが存在しない場合、フォルダ内にCityGMLファイルがない場合は無効とし、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>TextureFolderPath</td>
+<td>文字列</td>
+<td>航空写真（原画像）の格納フォルダパスです。<br>未記入および指定されたファイルが存在しない場合は無効とし、警告メッセージを表示し、テクスチャ貼付け処理を実施しません。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ExternalCalibElementPath</td>
+<td>文字列</td>
+<td>外部標定パラメータのファイルパスです。<br>未記入および指定されたファイルが存在しない場合は無効とし、警告メッセージを表示し、テクスチャ貼付け処理を実施しません。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>RotateMatrixMode</td>
+<td>整数値</td>
+<td>テクスチャ貼付け処理において、ワールド座標からカメラ座標に変換する際に使用する回転行列Rの種類を切り替える設定値です。<br>モードの種類は以下2種類とします。<br>0:R=R_x (ω) R_y (ϕ) R_z (κ)<br>1:R=R_z (κ)R_y (ϕ)R_x (ω)<br>未記入、または、0,1以外の値が入力された場合は、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CameraInfoPath</td>
+<td>文字列</td>
+<td>内部標定パラメータのファイルパスです。<br>未記入および指定されたファイルが存在しない場合は無効とし、警告メッセージを表示し、テクスチャ貼付け処理を実施しません。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>OutputFolderPath</td>
+<td>文字列</td>
+<td>生成モデルの出力先フォルダパスです。<br>指定されたフォルダ内に出力フォルダを作成し、作成したフォルダ内にCityGMLファイルとテクスチャ情報を出力します。<br>テクスチャ情報は、入力CityGMLファイル名称(拡張子は除く)_appearanceフォルダに格納されます。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>OutputOBJ</td>
+<td>真偽値</td>
+<td>生成モデルをCityGMLファイルとは別にOBJファイルとして出力するか否かを設定するフラグです。<br>trueまたはfalseで値を指定します。<br>未記入または、真偽値以外の値が入力された場合はエラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>OutputTexture</td>
+<td>真偽値</td>
+<td>CityGMLファイルにテクスチャー情報を出力するか否かを設定するフラグです。<br>trueまたはfalseで値を指定します。<br>未記入の場合はtrueとなります。</td>
+</tr>
+<tr>
+<td>12</td>
+<td>OutputLogFolderPath</td>
+<td>文字列</td>
+<td>ログのフォルダパスです。<br>未記入または、存在しない場合は、本システムのPythonコードと同階層のログフォルダ“output_log”にログファイルを作成し、処理を中止します。</td>
+</tr>
+<tr>
+<td>13</td>
+<td>DebugLogOutput</td>
+<td>真偽値</td>
+<td>デバッグレベルのログを出力するかどうかのフラグです。<br>trueまたはfalseで値を指定します。<br>未記入または、真偽値以外の値が入力された場合は、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>14</td>
+<td>PhaseConsistency</td>
+<td>辞書</td>
+<td>位相一貫性検査/補正処理用パラメータです。<br>項目は<a href="#param_list">位相一貫性検査/補正用設定パラメータ一覧</a>を参照してください。</td>
+</tr>
+</tbody>
+</table>
+<p><a id="param_list"></a>
+&lt;位相一貫性検査/補正用設定パラメータ一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>キー名</th>
+<th>値形式</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>DeleteErrorObject</td>
+<td>真偽値</td>
+<td>位相一貫性検査エラー時に建物データを削除するかどうかのフラグです。<br>trueまたはfalseで値を指定します。<br>未記入または、真偽値以外の値が指定された場合は、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>NonPlaneThickness</td>
+<td>数値</td>
+<td>位相一貫性非平面厚み検査のエラー判定閾値です。<br>非平面とみなす平面の厚みを m(メートル) で指定します。<br>未記入または、負の値が指定された場合は、エラーメッセージを表示し、処理を中止します。<br></td>
+</tr>
+<tr>
+<td>3</td>
+<td>NonPlaneAngle</td>
+<td>数値</td>
+<td>位相一貫性非平面法線角度検査のエラー判定閾値です。<br>非平面とみなす平面の法線角度を°で指定します。<br>未記入または、0°未満や90°以上が指定された場合は、エラーメッセージを表示し、処理を中止します。</td>
+</tr>
+</tbody>
+</table>
+<p>設定パラメータファイルの記載例を以下に示します。</p>
+<p>&lt;設定パラメータファイル記載例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_003.png" alt="設定パラメータファイル記載例"></p>
+ <br>
+<h2 id="3-3-外部標定パラメータファイル">3-3 外部標定パラメータファイル</h2>
+<p>外部標定パラメータ情報の一覧を示します。</p>
+<p>&lt;外部標定パラメータ情報の一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>要素名</th>
+<th>要素ID</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>投影中心位置</td>
+<td>X0</td>
+<td>航空写真撮影時のカメラの三次元座標</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>Y0</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>Z0</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>4</td>
+<td>カメラ姿勢</td>
+<td>Omega</td>
+<td>ω：進行方向の軸の回転角（ローリング）</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td>Phi</td>
+<td>φ：進行方向に直角で水平な軸の回転角（ピッチング）</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td>Kappa</td>
+<td>κ：鉛直方向の軸の回転角（ヨーイング）</td>
+</tr>
+</tbody>
+</table>
+<p>外部標定パラメータファイルの記載例を以下に示します。</p>
+<p>&lt;外部標定パラメータファイルの記載例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_004.png" alt="外部標定パラメータファイルの記載例"></p>
+<p>※ファイルを.csv形式として読込むため、列を一つのタブで区切る必要があります。</p>
+<h2 id="3-4-内部標定パラメータファイル">3-4　 内部標定パラメータファイル</h2>
+<p>内部標定パラメータ情報の一覧を示します。</p>
+<p>&lt;内部標定パラメータ情報の一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名称</th>
+<th>要素ID</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>焦点距離</td>
+<td>FocalLength</td>
+<td>カメラの焦点距離（mm）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>イメージセンササイズ</td>
+<td>ImageSize_x</td>
+<td>イメージセンササイズ(x,y) の実サイズ（mm）</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>ImageSize_y</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1pixelのサイズ</td>
+<td>PixelSize_x</td>
+<td>カメラの1pixel(x,y)の実サイズ（μm）</td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td>PixelSize_y</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>6</td>
+<td>カメラ主点</td>
+<td>PrinciplePoint_x</td>
+<td>カメラ主点(x,y)の座標（mm）</td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td>PrinciplePoint_y</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;内部標定パラメータファイルの記載例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_005.png" alt="内部標定パラメータファイルの記載例"></p>
+<p>※ファイルを.csv形式として読込むため、列を一つのタブで区切る必要があります。</p>
+<h1 id="4-システム出力">4 システム出力</h1>
+<p>以下に出力情報の概要図を記載します。</p>
+<p>&lt;出力ファイル概要図&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_006.png" alt="出力ファイル概要図"></p>
+<h2 id="4-1-出力ファイル一覧">4-1 出力ファイル一覧</h2>
+<p>以下に本ツールの出力ファイルを記載します。</p>
+<p>&lt;出力ファイル一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名</th>
+<th>出力先</th>
+<th>ファイルフォーマット</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>LOD2 CityGMLファイル</td>
+<td>設定パラメータファイル<br>“OutputFolderPath”キーで指定したフォルダ</td>
+<td>CityGMLファイル</td>
+<td>・入力されたCityGMLデータにLOD2建物形状データを追記したデータ</td>
+</tr>
+<tr>
+<td>2</td>
+<td>テクスチャ画像</td>
+<td>LOD2 CityGMLファイルと同階層の[(LOD2 CityGMLファイルの拡張子を除いた名称)_appearance]フォルダ</td>
+<td>JPGファイル</td>
+<td>・LOD2建物形状データ作成時にテクスチャ画像が生成された場合のみ出力されます。<br>・建物1棟につき1ファイルが出力されます。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ログファイル</td>
+<td>設定パラメータファイル<br>“OutputLogFolderPath”キーで指定したフォルダパスに新規作成した[outputlog_YYYMMDD_HHMMSS](YYYMMDD_HHMMSSは作成時の時間) フォルダ<br>（未記入または、存在しない場合は、実行時のカレントフォルダにログフォルダ“output_log”を作成し、その中に[outputlog_YYYMMDD_HHMMSS](YYYMMDD_HHMMSSは作成時の時間) フォルダを作成します）</td>
+<td>txtファイル/csvファイル</td>
+<td>・<a href="#4-4-%E3%83%AD%E3%82%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">4-4 ログファイル</a>を参照してください。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>OBJファイル</td>
+<td>LOD2 CityGMLファイルと同階層のobjフォルダ</td>
+<td>OBJファイル/マテリアルファイル</td>
+<td>・設定パラメータのOutputOBJがtrueの場合に、テクスチャ貼付け済みのモデルをOBJファイルに出力します。<br>・OBJファイルは建物ごとに出力し、テクスチャ情報が記載されているマテリアルファイルは入力CityGMLファイルごとに出力します。<br>・マテリアルファイルが参照するテクスチャ画像は、CityGMLファイルが参照するテクスチャ画像と同一です。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-2-lod2-citygmlファイル">4-2 LOD2 CityGMLファイル</h2>
+<p>本ツールが出力するLOD2 CityGMLファイルは、入力CityGMLファイルの建物情報にLOD2モデル情報(建物形状情報とテクスチャ情報)を追記したCityGMLファイルです。 <br>
+以下に、出力LOD2 CityGMLファイルの例を示します。</p>
+<p>&lt;出力LOD2 CityGMLファイル例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_007.png" alt="出力LOD2 CityGMLファイル例"></p>
+<h2 id="4-3-lod2-citygmlファイル">4-3 LOD2 CityGMLファイル</h2>
+<p>LOD2建物形状データ作成時にテクスチャ画像が生成された場合は、LOD2 CityGMLファイルと同階層にテクスチャ画像フォルダを出力します。出力フォルダ内には、LOD2モデルのテクスチャ画像を建物ごとに出力します。また、入力CityGMLファイルにテクスチャ画像が付属している場合は、出力フォルダに入力CityGMLファイルのテクスチャ画像をコピーします。</p>
+<p>&lt;出力テクスチャ画像例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_008.png" alt="出力テクスチャ画像例"></p>
+<h2 id="4-4-ログファイル">4-4 ログファイル</h2>
+<h3 id="4-4-1-出力ログファイル一覧">4-4-1 出力ログファイル一覧</h3>
+<p>以下に出力ログファイル一覧を記載します。 <br>
+[No.1実行ログファイル]の詳細情報として、[No.2～6]の各モジュールログファイルを出力します。 <br>
+なお[No.1～6]は開発者向けログ、[No.7モデル化結果サマリーファイル]はユーザー向けログを想定しています。</p>
+<p>&lt;出力ログファイル一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名</th>
+<th>出力ファイル名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>実行ログファイル</td>
+<td>main_log.txt</td>
+<td>・本システムのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CityGML入力モジュールログファイル</td>
+<td>input_citygml_log.txt</td>
+<td>・CityGML入力モジュールのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>モデル要素生成モジュールログファイル</td>
+<td>model_element_generation_log.txt</td>
+<td>・モデル要素生成モジュールのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>位相一貫性検査/補正モジュールログファイル</td>
+<td>check_phase_consistensy_log.txt</td>
+<td>・位相一貫性検査/補正モジュールのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>テクスチャ貼付けモジュールログファイル</td>
+<td>paste_texture_log.txt</td>
+<td>・テクスチャ貼付けモジュールのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>CityGML出力モジュールログファイル</td>
+<td>output_citygml_log.txt</td>
+<td>・CityGML出力モジュールのログメッセージを出力します。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>モデル化結果サマリーファイル</td>
+<td>model_create_result.csv</td>
+<td>・各建物のモデル化結果ログを出力します。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-4-2-実行ログファイル">4-4-2 実行ログファイル</h3>
+<h4 id="4-4-2-1-ログ構成">4-4-2-1 ログ構成</h4>
+<p>以下に実行ログファイルの構成を記載します。</p>
+<p>&lt;ログ構成&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_009.png" alt="ログ構成"></p>
+<p>&lt;ログ構成&gt;</p>
+<table>
+<thead>
+<tr>
+<th>出力場所</th>
+<th>No</th>
+<th>項目名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ヘッダ情報</td>
+<td>①</td>
+<td>本ツール名</td>
+</tr>
+<tr>
+<td></td>
+<td>②</td>
+<td>本ツールのバージョン</td>
+</tr>
+<tr>
+<td></td>
+<td>③</td>
+<td>本ツールの起動時間</td>
+</tr>
+<tr>
+<td></td>
+<td>④</td>
+<td>各モジュールの名前とモジュールログファイル名</td>
+</tr>
+<tr>
+<td></td>
+<td>⑤</td>
+<td>設定パラメータファイルパス</td>
+</tr>
+<tr>
+<td></td>
+<td>⑥</td>
+<td>モジュール動作中のデバッグログ出力フラグ</td>
+</tr>
+<tr>
+<td></td>
+<td>⑦</td>
+<td>テクスチャ貼付け済みOBJファイル出力フラグ</td>
+</tr>
+<tr>
+<td></td>
+<td>⑧</td>
+<td>入力LASファイルのXY座標を入れ替えて使用するか否かのフラグ</td>
+</tr>
+<tr>
+<td></td>
+<td>⑨</td>
+<td>テクスチャ貼付け処理で使用します回転行列のモード</td>
+</tr>
+<tr>
+<td>モジュールごとの実行結果ログ</td>
+<td>⑩</td>
+<td>各モジュールのログ</td>
+</tr>
+<tr>
+<td>フッタ情報</td>
+<td>⑪</td>
+<td>本ツールの終了時間</td>
+</tr>
+<tr>
+<td></td>
+<td>⑫</td>
+<td>本ツールの稼働時間</td>
+</tr>
+</tbody>
+</table>
+<p>[⑩各モジュールのログ]の例を以下に記載します。
+処理対象のCityGMLファイルごとに、各モジュールの結果概要(モジュール開始・終了日時、モジュール実施結果)が記載されます。
+処理対象のCityGMLファイルが切り替わる際は、区切り線と処理対象ファイル名が記載されます。</p>
+<p>&lt;各モジュールログ例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_010.png" alt="各モジュールログ例"></p>
+<p>ログファイルに出力されるログレベルの一覧を以下に記載します。</p>
+<p><a id="log_level"></a>
+&lt;ログレベル&gt;</p>
+<table>
+<thead>
+<tr>
+<th>ログレベル</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERROR</td>
+<td>処理が途中終了するような致命的なエラー</td>
+</tr>
+<tr>
+<td>MODEL_ERROR</td>
+<td>LOD2建物モデルに関するエラー(生成エラー、検査結果がエラーの場合等)</td>
+</tr>
+<tr>
+<td>WARN</td>
+<td>問題ですが、処理を継続実行可能なエラー</td>
+</tr>
+<tr>
+<td>INFO</td>
+<td>モジュールの開始や終了などの情報</td>
+</tr>
+<tr>
+<td>DEBUG</td>
+<td>システムの動作状況に関する詳細な情報<br>パラメータファイルにてDebugLogOutputがtrueに指定されている場合は、出力します。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-4-2-2-ログメッセージ">4-4-2-2 ログメッセージ</h4>
+<p>以下に実行ログファイルの主なログメッセージを記載します。 <br>
+開発者向けログである性質上、記載以外のメッセージが出力される場合があります。</p>
+<p>&lt;ログメッセージ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[ERROR]</td>
+<td>parameter file does not exist.</td>
+<td>設定ファイルが存在しない。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[ERROR]</td>
+<td>[KeyName] key does not exist in json file.</td>
+<td>設定ファイルに[KeyName]のパラメータの記載が不足している。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[ERROR]</td>
+<td>LasCoordinateSystem is invalid. (input value range : 1 - 19)</td>
+<td>航空写真DSM点群の平面直角座標系の番号に1～19以外の値が入力された。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[ERROR]</td>
+<td>CityGMLFolderPath is invalid.</td>
+<td>LOD1 CityGMLフォルダパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[ERROR]</td>
+<td>CityGMLFolderPath not found.</td>
+<td>LOD1 CityGMLフォルダパスが存在しない。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[ERROR]</td>
+<td>TextureFolderPath is invalid.</td>
+<td>航空写真(原画像) のフォルダパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[ERROR]</td>
+<td>DsmFolderPath is invalid.</td>
+<td>航空写真DSM点群のフォルダパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>[ERROR]</td>
+<td>LAS file (*.las) not found.</td>
+<td>航空写真DSM点群のフォルダ内にLASファイルがない、もしくはフォルダパスが存在しない。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>[ERROR]</td>
+<td>DSM folder not found.</td>
+<td>航空写真DSM点群のフォルダパスが存在しない。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>[ERROR]</td>
+<td>ExternalCalibElementPath is invalid.</td>
+<td>外部標定パラメータファイルパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>[ERROR]</td>
+<td>CameraInfoPath is invalid.</td>
+<td>内部標定パラメータファイルパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>12</td>
+<td>[ERROR]</td>
+<td>OutputFolderPath is invalid.</td>
+<td>生成モデルの出力先フォルダパスが文字列ではない。</td>
+</tr>
+<tr>
+<td>13</td>
+<td>[ERROR]</td>
+<td>[OutputFolderPath] cannot make.</td>
+<td>生成モデルの出力先パスが作成不可能なディレクトリを指定している。<br>[OutputFolderPath]には、実際のフォルダパスが記載される。</td>
+</tr>
+<tr>
+<td>14</td>
+<td>[ERROR]</td>
+<td>json file decoding error: Expecting value line [X] column [Y].</td>
+<td>設定パラメータファイルに未記入項目がある。以下は該当箇所の数値が表示される。<br>［X］：未記入の行<br>［Y］：未記入の列(文字数）</td>
+</tr>
+<tr>
+<td>15</td>
+<td>[ERROR]</td>
+<td>ModelElementGeneration Module Not Output Obj File</td>
+<td>モデル要素生成モジュールから中間出力OBJファイルが出力されていない。</td>
+</tr>
+<tr>
+<td>16</td>
+<td>[ERROR]</td>
+<td>CheckPhaseConsistensy Module Not Output Obj File</td>
+<td>位相一貫性チェック・補正モジュールから中間出力OBJファイルが出力されていない。</td>
+</tr>
+<tr>
+<td>17</td>
+<td>[ERROR]</td>
+<td>OutputLogFolderPath is invalid.</td>
+<td>ログのフォルダパスが未設定、または、文字列ではない。</td>
+</tr>
+<tr>
+<td>18</td>
+<td>[ERROR]</td>
+<td>DebugLogOutput is invalid.</td>
+<td>デバッグレベルのログを出力するか否かを切り替えるフラグに真偽値以外の値を入力している。</td>
+</tr>
+<tr>
+<td>19</td>
+<td>[ERROR]</td>
+<td>LasSwapXY is invalid.</td>
+<td>LASファイルのXY座標を入れ替えて使用するか否かを切り替えるフラグに真偽値以外の値を入力している。</td>
+</tr>
+<tr>
+<td>20</td>
+<td>[ERROR]</td>
+<td>OutputOBJ is invalid.</td>
+<td>生成モデルをCityGMLファイルとは別にOBJファイルとして出力するか否かを設定しますフラグに真偽値以外の値を入力している。</td>
+</tr>
+<tr>
+<td>21</td>
+<td>[ERROR]</td>
+<td>RotateMatrixMode is invalid.</td>
+<td>テクスチャ貼付け処理に使用する回転行列Rのモードに0,1以外の値を入力している。</td>
+</tr>
+<tr>
+<td>22</td>
+<td>[ERROR]</td>
+<td>DeleteErrorObject is invalid.</td>
+<td>位相一貫性検査エラー時に建物データを削除するか否かを切り替えるフラグに真偽値以外の値を入力している。</td>
+</tr>
+<tr>
+<td>23</td>
+<td>[ERROR]</td>
+<td>NonPlaneThickness is invalid.</td>
+<td>位相一貫性非平面厚み検査のエラー判定閾値が未記入または、負の値を入力している。</td>
+</tr>
+<tr>
+<td>24</td>
+<td>[ERROR]</td>
+<td>NonPlaneAngle is invalid.</td>
+<td>位相一貫性非平面法線角度検査のエラー判定閾値に0°未満または、90°以上の値を入力している。</td>
+</tr>
+<tr>
+<td>25</td>
+<td>[WARNING]</td>
+<td>OutputLogFolderPath Value change &quot;&quot; to &quot;output_log&quot;</td>
+<td>ログのフォルダパスが未設定のため、実行時のカレントフォルダにログフォルダ“output_log”を作成しログファイルを出力します。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-4-3-モジュールログファイル">4-4-3 モジュールログファイル</h3>
+<h4 id="4-4-3-1-ログ構成">4-4-3-1 ログ構成</h4>
+<p>モジュールログファイルの例を以下に記載します。 <br>
+各モジュールの詳細結果(モジュール開始・終了日時、モジュールの任意メッセージ)が記載されます。処理対象のCityGMLファイルが切り替わる際は、区切り線と処理対象ファイル名が記載されます。 <br>
+なおメッセージのログレベルは<a href="#log_level">ログレベル</a>の表を参照とします。</p>
+<p>&lt;モジュールログ例(CityGML出力)&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_011.png" alt="モジュールログ例(CityGML出力)"></p>
+<h4 id="4-4-3-2-ログメッセージ">4-4-3-2 ログメッセージ</h4>
+<p>以下に各モジュールのエラーログファイルの主なログメッセージを記載します。 <br>
+開発者向けログである性質上、記載以外のメッセージが出力される場合があります。</p>
+<p>&lt;CityGML入力モジュール　ログメッセージ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[MODEL_ERROR]</td>
+<td>All outline not found</td>
+<td>入力したCityGMLファイルから一つも建物外形データが見つからない。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[WARNING]</td>
+<td>Outline not found [建物ID]</td>
+<td>入力したCityGMLファイルから記載の建物IDの建物外形データが見つからない。</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;モデル要素生成モジュール　ログメッセージ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[ERROR]</td>
+<td>ModelCreator.create, No LoD0 polygon data.</td>
+<td>建物外形データが空である。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[ERROR]</td>
+<td>ModelCreator.__init__, DSM folder not found.</td>
+<td>航空写真DSM点群のフォルダパスが存在しない。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[ERROR]</td>
+<td>ModelCreator.__init__, LAS file (*.las) not found.</td>
+<td>航空写真DSM点群のLASファイルが存在しない。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[MODEL_ERROR]</td>
+<td>[建物ID], LasManager.read_header, No Las file within the read range.</td>
+<td>建物外形データ範囲内に重畳するLASファイルが存在しない。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[MODEL_ERROR]</td>
+<td>[建物ID],LasManager.get_points, No point cloud data within the read range.</td>
+<td>建物外形データ範囲内に点群データが存在しない。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[MODEL_ERROR]</td>
+<td>[建物ID] ,LasManager.get_points, No ground point cloud data.</td>
+<td>地面点群データが存在しない。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[MODEL_ERROR]</td>
+<td>[建物ID], Building.__init__, LoD0 polygon has less than 4 vertices.</td>
+<td>頂点列が4点未満のデータを含む建物外形データである。<br>建物外形データは、最低3頂点からなる三角形ポリゴンとする。なお、ポリゴンの頂点列データの終点には、始点と同一データを挿入するものとする。そのため、建物外形データは4頂点以上の頂点列データを持つ。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>[MODEL_ERROR]</td>
+<td>Zero area face is detected.</td>
+<td>面積が0の建物外形データである。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>[WARNING]</td>
+<td>Could not create models for some data.</td>
+<td>作成できないモデルが存在する。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>[WARNING]</td>
+<td>LasManager.read_header, Failed to read Las file. ([LASファイル名])</td>
+<td>航空写真DSM点群の取得時に例外が発生するLASデータがある。</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;位相一貫性チェック・補正モジュール　ログメッセージ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Self intersecting polygon is detected.', <br>'Vertices : [座標配列]', <br>'Status : Deleted.'</td>
+<td>自己交差エラーもしくは、自己接触エラーを検知した。(該当するファイルを削除する)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Self intersecting polygon is detected.', <br>'Vertices : [座標配列]', <br>'Status : Error.'</td>
+<td>自己交差エラーもしくは、自己接触エラーを検知した。(該当するファイルを削除しない)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Self intersecting faces are detected.', <br>'Vertices : [座標配列]', <br>'Status : Deleted.'</td>
+<td>地物内面同士交差エラーを検知した。(該当するファイルを削除する)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Self intersecting faces are detected.', <br>'Vertices : [座標配列]', <br>'Status : Error.'</td>
+<td>地物内面同士交差エラーを検知した。(該当するファイルを削除しない)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス] ', <br>'Error : Zero area face is detected.', 'Vertices : [座標配列]', <br>'Status : Auto corrected. '</td>
+<td>面積0ポリゴンエラーを検知して、自動補正した。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Model is not a solid model.', <br>'Vertices : [座標配列]', <br>'Status : Auto corrected.'</td>
+<td>ソリッド閉合エラーを検知して、自動補正した。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Double Points is detected.', <br>'Vertices : [座標配列]', <br>'Status : Auto corrected.'</td>
+<td>連続頂点重複エラーを検知して、自動補正した。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>[MODEL_ERROR]</td>
+<td>'File : [中間出力OBJファイルパス]', <br>'Error : Non-Plane face is detected', <br>'Vertices : [座標配列]', <br>'Status : Auto corrected.'</td>
+<td>非平面(法線角度もしくは厚み)エラーを検知して、自動補正した。</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;テクスチャ貼付けモジュール　ログメッセージ&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[MODEL_ERROR]</td>
+<td>Folder not found (Texturefolder)</td>
+<td>航空写真フォルダパスが存在しない。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[MODEL_ERROR]</td>
+<td>Photo not found</td>
+<td>全ての航空写真の読み込みに失敗した。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[MODEL_ERROR]</td>
+<td>No such file or directory: [外部標定パラメータファイルパスor内部標定パラメータファイルパス]</td>
+<td>外部標定パラメータファイルパス、もしくは内部標定パラメータファイルパスが存在しない。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[MODEL_ERROR]</td>
+<td>caminfo data is insufficient</td>
+<td>内部標定パラメータ情報に不足がある。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>[WARNING]</td>
+<td>PhotoFile Not Found [航空写真ファイルパス]</td>
+<td>航空写真ファイルが存在しない。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>[WARNING]</td>
+<td>excalib data is insufficient</td>
+<td>外部標定パラメータ情報に不足がある。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>[WARNING]</td>
+<td>excalib data including empty</td>
+<td>外部標定パラメータ情報に値が入っていない。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>[WARNING]</td>
+<td>Texture not found id:[建物ID]</td>
+<td>テクスチャ画像が見つからず貼付けできなかった。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>[DEBUG]</td>
+<td>roof refImage:[航空写真ファイル名]</td>
+<td>屋根面テクスチャ画像抽出元の航空写真ファイル名。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>[DEBUG]</td>
+<td>wall refImage:[航空写真ファイル名]</td>
+<td>壁面テクスチャ画像抽出元の航空写真ファイル名。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>[DEBUG]</td>
+<td>calib ON</td>
+<td>内部標定パラメータ情報のカメラキャリブレーションデータが有効な場合。</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;CityGML出力モジュール&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>ログレベル</th>
+<th>エラー文言</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>[MODEL_ERROR]</td>
+<td>All objfile not found</td>
+<td>全ての中間出力OBJファイルが存在しない。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[WARNING]</td>
+<td>Objfile not found [中間出力OBJファイルパス]</td>
+<td>記載の中間出力OBJファイルが存在しない。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-4-4-モデル化結果サマリーファイル">4-4-4 モデル化結果サマリーファイル</h3>
+<h4 id="4-4-4-1-サマリー構成">4-4-4-1 サマリー構成</h4>
+<p>各建物のモデル作成結果をcsvファイル形式で出力します。 <br>
+出力例を以下に示します。</p>
+<p>&lt;モデル化結果出力例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_012.png" alt="モデル化結果出力例"></p>
+<p>ヘッダ部分に出力日時と出力結果の説明が記載され、モデル化結果一覧にモデル(建物)ごとの出力結果やモジュールごとの実行結果が記載されます。 <br>
+モデル化結果一覧の出力項目と内容について以下に示します。</p>
+<p>&lt;モデル化結果サマリーファイルの出力項目&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>項目名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>No</td>
+<td>行番号</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ファイル名</td>
+<td>モデル情報が記載されているCityGMLファイル名</td>
+</tr>
+<tr>
+<td>3</td>
+<td>建物ID</td>
+<td>建物ID</td>
+</tr>
+<tr>
+<td>4</td>
+<td>最終結果</td>
+<td>SUCCESS：LOD2モデルの作成に成功<br>WARNING：LOD2モデルを作成したが、不備がある建物<br>ERROR：LOD2モデルの作成に失敗</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CityGML読み込み</td>
+<td>〇：LOD0モデルの取得に成功<br>×：LOD0モデルの取得に失敗</td>
+</tr>
+<tr>
+<td>6</td>
+<td>LOD2モデルの作成</td>
+<td>〇：LOD2モデルの作成に成功<br>×：LOD2モデルの作成に失敗<br>-：作成対象外(LOD0モデル情報の取得に失敗したため、LOD2モデルの作成を行わない)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>連続頂点重複検査</td>
+<td>〇：モデル面の頂点が連続して重複していない場合、または、重複を検知して自動補正した場合<br>×：モデル面の重複頂点を自動補正できなかった場合<br>-：検査対象外(LOD2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ソリッド閉合検査</td>
+<td>〇：モデルが閉じた空間である場合、または、エラーを検知して自動補正した場合<br>×：モデルが閉じた空間となるように自動補正できなかった場合<br>-：検査対象外(LOD2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>非平面検査</td>
+<td>〇：モデル面が平面である場合、または、非平面を検知して自動補正した場合<br>×：非平面を自動補正できなかった場合<br>-：検査対象外(Lod2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>面積0ポリゴン検査</td>
+<td>〇：面積が0のモデル面が無い場合、または、面積0のモデル面を検知して自動補正した場合<br>×：面積が0のモデル面を自動補正できなかった場合<br>-：検査対象外(LOD2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>自己交差/自己接触検査</td>
+<td>〇：モデル面が始終点以外で交差や接触をしていない場合<br>×：モデル面が始終点以外で交差や接触をしている場合<br>-：検査対象外(LOD2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>地物内面同士交差検査</td>
+<td>〇：異なる面同士が交差していない場合<br>×：異なる面同士が交差している場合<br>-：検査対象外(LOD2モデルの作成に失敗したため検査を行わない)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>テクスチャ貼付け</td>
+<td>〇：テクスチャ画像の貼付けに成功<br>×：モデル面にテクスチャ画像が貼付けられなかった場合<br>-：貼付け対象外(前処理に失敗したため検査を行わない)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-5-objファイル">4-5 OBJファイル</h2>
+<p>最終出力結果にLOD2モデルのOBJファイルを出力する設定(OutputOBJ = true)にした場合、本ツールは出力LOD2 CityGMLファイルと同階層にOBJファイルを出力します。 <br>
+OBJファイルは建物ごとに出力し、建物情報が記載されているCityGMLファイルごとのフォルダに分割して保存します。OBJファイルが参照するテクスチャ画像情報が記載されているマテリアルファイルは、CityGMLファイルごとに1ファイル出力します。なお、OBJファイルが参照するテクスチャ画像は、CityGMLファイルが参照するテクスチャ画像と同一です。 <br>
+以下に、OBJファイルの出力例を示します。</p>
+<p>&lt;objファイルの出力例&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_013.png" alt="objファイルの出力例"></p>
+<h1 id="5-基本操作">5 基本操作</h1>
+<p>本ツールの操作手順を記載します。</p>
+<h2 id="5-1-入力ファイルの準備">5-1 入力ファイルの準備</h2>
+<p>本ツールに入力するデータの作成を行います。(入力データの詳細については、<a href="#3-%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E5%85%A5%E5%8A%9B">3 システム入力</a>を参照してください。また、チュートリアル用のデータセットを<a href="#6-%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88">6 チュートリアルデータセット</a>に用意してあります。) <br>
+まずは、SfMソフトウェアを用いて航空写真(原画像)から、DSM点群を作成します。 <br>
+次に、SfMソフトウェアが出力する外部標定要素と内部標定要素情報を、手動編集にて本ツールのファイルフォーマットに沿ったデータに変換します。ファイルフォーマットについては、<a href="#3-3-%E5%A4%96%E9%83%A8%E6%A8%99%E5%AE%9A%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">3-3 外部標定パラメータファイル</a>、<a href="#3-4-%E5%86%85%E9%83%A8%E6%A8%99%E5%AE%9A%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">3-4 内部標定パラメータファイル</a>を参照してください。 <br>
+最後に、航空写真の撮影エリアに該当するLOD1 CityGMLファイルを用意します。(G空間情報センターからCityGMLファイルをダウンロードすることを想定しています。)</p>
+<p>&lt;入力ファイルの準備&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_014.png" alt="入力ファイルの準備"></p>
+<h2 id="5-2-設定パラメータファイルの作成">5-2 設定パラメータファイルの作成</h2>
+<p>入力ファイルの準備が完了したら、設定パラメータファイルの作成を行います。 <br>
+設定パラメータファイルの記載内容については、<a href="#3-2-%E8%A8%AD%E5%AE%9A%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">3-2 設定パラメータファイル</a>を参照してください。</p>
+<h2 id="5-3-ツールの実行">5-3 ツールの実行</h2>
+<p>下図に操作手順を示します。</p>
+<p>&lt;操作手順&gt;</p>
+<p><img src="../resources/userManLod2Bldg/userManLod2Bldg_015.png" alt="操作手順"></p>
+<p>本ツールを実行するにあたり、仮想環境を用意する必要があります。 <br>
+なお、仮想環境の構築は初回のみの作業です。仮想環境の構築手順の詳細は、環境構築手順書を参照してください。<br>
+入力ファイルの準備、設定パラメータファイルの作成、および、仮想環境の構築が完了した場合は、仮想環境上で本ツールを実行します。</p>
+<p>本ツールを実行する際のコマンドを以下に示します。(上図、操作手順のツールの実行で使用するコマンド)</p>
+<pre><code>&gt; python AutoCreateLod2.py param.json
+</code></pre>
+<p>AutoCreateLod2.py : 本システムのPythonコード <br>
+param.json : 設定パラメータファイルパス</p>
+<p>本ツールの動作が終了した後は、仮想環境の終了動作を行うことで仮想環境から抜け出すことが出来ます。 <br>
+出力ファイルの確認を行う際は、以下フォルダの確認を行います。</p>
+<table>
+<thead>
+<tr>
+<th>出力ファイル</th>
+<th>出力場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOD2 CityGMLファイル</td>
+<td>設定パラメータファイルのOutputFolderPathで指定したフォルダ</td>
+</tr>
+<tr>
+<td>ログファイル</td>
+<td>設定パラメータファイルのOutputLogFolderPathで指定したフォルダ</td>
+</tr>
+</tbody>
+</table>
+<h1 id="6-チュートリアルデータセット">6 チュートリアルデータセット</h1>
+<h2 id="6-1-データのダウンロード">6-1 データのダウンロード</h2>
+<p>チュートリアル用のデータセットを<a href="https://drive.google.com/file/d/1UnxBL2MrDZaQ5EF44TXCFc-ZnVbp9Gf6/view?usp=drive_link">こちら</a>からダウンロード可能です。</p>
+<h2 id="6-2-データセット構成">6-2 データセット構成</h2>
+<p>チュートリアル用のデータセット構成を以下に示します。</p>
+<p>&lt;チュートリアル用のデータセット構成&gt;
+<img src="../resources/userManLod2Bldg/userManLod2Bldg_016.png" alt="チュートリアル用のデータセット構成"></p>
+<p>本来、以下のデータに関しては、SfMソフトウェアを用いて作成したり、G空間情報センターからデータをダウンロードしたりする必要がありますが、チュートリアル用のデータセットでは準備済みの状態です。</p>
+<ul>
+<li>DSM点群</li>
+<li>内部標定要素</li>
+<li>外部標定要素</li>
+<li>LOD1 CityGMLデータ</li>
+</ul>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

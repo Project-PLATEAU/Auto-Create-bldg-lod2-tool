@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>操作マニュアル </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="操作マニュアル ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../resources/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="操作マニュアル">操作マニュアル</h1>
+
+<h1 id="1-本書について">1 本書について</h1>
+<p>本書では、建物テクスチャ視認性向上ツールの内の屋根面視認性向上ツール（以下、屋根面ツールという。）の操作手順について記載しています。</p>
+<h1 id="2-屋根面視認性向上ツールについて">2 屋根面視認性向上ツールについて</h1>
+<p>LOD2建築物（以下、LOD2建物）に貼付されているテクスチャ画像は、一般的には航空写真をもとに作られており、地上解像度等の撮影条件の影響を受け、視認性が低いケースがあります。そこでLOD2建物の視認性を向上するツールを開発しました。このツールは、屋根面視認性向上ツールと壁面視認性向上ツールで構成されています。屋根面ツールは、LOD2建築物モデル自動生成ツール <a href="https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool">https://github.com/Project-PLATEAU/Auto-Create-bldg-lod2-tool</a> への入力データである航空写真（中心投影）を入力とし、地上画素寸法6.25cm相当に超解像化された画像を出力します。</p>
+<p>&lt;屋根面ツールの処理フロー&gt;</p>
+<p><img src="../resources/userManSuperResoRS/userManSuperResoRS_001.png" alt="屋根面ツールの処理フロー"></p>
+<ol>
+<li><p>データ分割機能 <br>
+航空写真を読み込み、本システムが動作可能な画像サイズに変更します。</p>
+</li>
+<li><p>高解像度画像生成機能 <br>
+機械学習モデルを使用して、分割した画像ファイルの高解像度化を行います。</p>
+</li>
+<li><p>データ統合機能 <br>
+高解像度化した分割画像ファイルを統合して、1枚の高解像度の画像ファイルを作成します。</p>
+</li>
+</ol>
+<h1 id="3-システム入力">3 システム入力</h1>
+<h2 id="3-1-入力ファイル一覧">3-1 入力ファイル一覧</h2>
+<p>以下に屋根面ツールの入力ファイルを記載します。</p>
+<p>&lt;入力ファイル一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名</th>
+<th>ファイルフォーマット</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>航空写真（中心投影）</td>
+<td>TIFF</td>
+<td>・ 直下視の航空写真（中心投影）<br>・ 24ビットフルカラー形<br>・ 地上画素寸法：10～25cm</td>
+</tr>
+<tr>
+<td>2</td>
+<td>設定パラメータ</td>
+<td>JSON</td>
+<td>・ 実行時に使用するパラメータファイル</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-2-設定パラメータファイル">3-2 設定パラメータファイル</h2>
+<p>設定パラメータファイルには、入出力フォルダの相対パスおよび、内部で使用する各種パラメータを記載します。</p>
+<p>&lt;設定パラメータファイルの仕様&gt;</p>
+<table>
+<thead>
+<tr>
+<th>ファイル形式</th>
+<th>ファイル名</th>
+<th>格納フォルダ</th>
+<th>特記事項</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td>param.json</td>
+<td>任意</td>
+<td>文字コードはUTF-8とします。</td>
+</tr>
+</tbody>
+</table>
+<p>設定パラメータファイルのパラメータ一覧を以下に記載します。</p>
+<p>&lt;設定パラメータ一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>キー名</th>
+<th>値形式</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>InputDir</td>
+<td>文字列</td>
+<td>航空写真が保存されているフォルダパス</td>
+</tr>
+<tr>
+<td>2</td>
+<td>OutputDir</td>
+<td>文字列</td>
+<td>途中結果と最終結果を出力するフォルダパス</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GSD</td>
+<td>数値</td>
+<td>航空写真の地上画素寸法。単位はメートル。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>【任意】Device</td>
+<td>文字列</td>
+<td>推論を実行するデバイス。CPUのみの環境では[cpu]を指定する。デフォルトは[cuda]</td>
+</tr>
+<tr>
+<td>5</td>
+<td>OutputLogDir</td>
+<td>文字列</td>
+<td>ログのフォルダパス。未記入又は存在しない場合は、本システムのPythonコードと同階層にログファイルを作成する。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>【任意】DebugLogOutput</td>
+<td>真偽値</td>
+<td>デバッグレベルのログを出力するかどうかのフラグ。True又はfalseで値を指定する。<br>未記入又は真偽値以外の値が入力された場合は、falseとする。</td>
+</tr>
+</tbody>
+</table>
+<p>&lt;記載例&gt;</p>
+<p><img src="../resources/userManSuperResoRS/userManSuperResoRS_002.png" alt="記載例"></p>
+<p><a id="input_folder_ex"></a>
+&lt;実行前フォルダ構成例&gt;</p>
+<p><img src="../resources/userManSuperResoRS/userManSuperResoRS_003.png" alt="実行前フォルダ構成例"></p>
+<h1 id="4-システム出力">4 システム出力</h1>
+<h2 id="4-1-出力ファイル一覧">4-1 出力ファイル一覧</h2>
+<p>以下に屋根面ツールの出力ファイルを記載します。</p>
+<p>&lt;出力ファイル一覧&gt;</p>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>データ名</th>
+<th>ファイル形式</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>視認性向上航空写真画像</td>
+<td>TIFF</td>
+<td>高解像度化された航空写真</td>
+</tr>
+<tr>
+<td>2</td>
+<td>実行ログ</td>
+<td>TXT</td>
+<td>実行履歴が記録される</td>
+</tr>
+</tbody>
+</table>
+<p><a id="output_folder_ex"></a>
+&lt;実行後フォルダ構成例&gt;</p>
+<p><img src="../resources/userManSuperResoRS/userManSuperResoRS_004.png" alt="実行後フォルダ構成例"></p>
+<h2 id="4-2-視認性向上航空写真画像">4-2 視認性向上航空写真画像</h2>
+<p>地上画素寸法6.25cm相当に高解像度された航空写真が出力されます。 <br>
+この画像はLOD2建築物モデル自動生成ツールの入力データとして利用することができます。 <br>
+この際、内部標定パラメータファイルの1pixelのサイズを下記の式で算出し入力してください。</p>
+<pre><code>PixelSize_x_SuperResolution = PixelSize_x_Original × 6.25 / GSD
+PixelSize_y_SuperResolution = PixelSize_y_Original × 6.25 / GSD
+</code></pre>
+<p>PixelSize_x_SuperResolution, PixelSize_y_SuperResolution：高解像度化された航空写真用のカメラセンサ1pixel(x,y)のサイズ(μm) <br>
+PixelSize_x_Original, PixelSize_y_Original：カメラセンサ1pixel(x,y)の実サイズ(μm) <br>
+GSD：屋根面ツールに入力した航空写真の地上画素寸法(m)</p>
+<p>※内部標定パラメータファイルの詳細は、LOD2建築物モデル自動生成ツールの操作マニュアル 「3-4 内部標定パラメータファイル」をご覧ください。</p>
+<h2 id="4-3-実行ログ">4-3 実行ログ</h2>
+<p>実行記録が記載されたファイルです。出力内容は、指定パラメータ内容、処理開始時刻、処理終了時刻、処理時間等です。</p>
+<h1 id="5-基本操作">5 基本操作</h1>
+<p>屋根面ツールの操作手順を記載します。</p>
+<h2 id="5-1-入力ファイルの準備">5-1 入力ファイルの準備</h2>
+<p>屋根面ツールに入力するデータの作成を行います。(入力データの詳細については、<a href="#3-%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E5%85%A5%E5%8A%9B">3 システム入力</a>を参照してください。また、チュートリアル用のデータセットを<a href="#6-%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%83%E3%83%88">6 チュートリアルデータセット</a>に用意してあります。) <br>
+入力データとして使用する航空写真（中心投影）は、<a href="#input_folder_ex">実行前フォルダ構成例</a>のように、dataフォルダに格納してください。チュートリアルデータを利用する場合は、データセットのRawImageフォルダに格納されている航空写真（TIFFファイル）をdataフォルダに格納してください。</p>
+<h2 id="5-2-設定パラメータファイルの作成">5-2 設定パラメータファイルの作成</h2>
+<p>入力ファイルの準備が完了したら、設定パラメータファイルの作成を行います。 <br>
+設定パラメータファイルの記載内容については、<a href="#3-2-%E8%A8%AD%E5%AE%9A%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">3-2 設定パラメータファイル</a>を参照してください。</p>
+<h2 id="5-3-ツールの実行">5-3 ツールの実行</h2>
+<p>下図に操作手順を示します。</p>
+<p>&lt;操作手順&gt;</p>
+<p><img src="../resources/userManSuperResoRS/userManSuperResoRS_005.png" alt="操作手順"></p>
+<p>屋根面ツールを実行するにあたり、仮想環境を用意する必要があります。 <br>
+なお、仮想環境の構築は初回のみの作業です。仮想環境の構築手順の詳細は、環境構築手順書を参照してください。<br>
+入力ファイルの準備、設定パラメータファイルの作成、および、仮想環境の構築が完了した場合は、仮想環境上で屋根面ツールを実行します。</p>
+<p>屋根面ツールを実行する際のコマンドを以下に示します。(上図、操作手順のツールの実行で使用するコマンド)</p>
+<pre><code>python CreateSuperResolution.py param.json
+</code></pre>
+<p>CreateSuperResolution.py：屋根面ツールのPythonコード <br>
+param.json：設定パラメータファイル</p>
+<p>屋根面ツールの動作が終了した後は、仮想環境の終了動作を行うことで仮想環境から抜け出すことが出来ます。 <br>
+出力ファイルの確認を行う際は、以下フォルダの確認を行います。（<a href="#output_folder_ex">実行後フォルダ構成例</a>）</p>
+<table>
+<thead>
+<tr>
+<th>出力ファイル</th>
+<th>出力場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>視認性向上航空写真画像</td>
+<td>設定パラメータファイルのOutputDirで指定したフォルダ</td>
+</tr>
+<tr>
+<td>実行ログ</td>
+<td>設定パラメータファイルのOutputLogDirで指定したフォルダ</td>
+</tr>
+</tbody>
+</table>
+<h1 id="6-チュートリアルデータセット">6 チュートリアルデータセット</h1>
+<h2 id="6-1-データのダウンロード">6-1 データのダウンロード</h2>
+<p>チュートリアル用のデータセットを<a href="https://drive.google.com/file/d/1UnxBL2MrDZaQ5EF44TXCFc-ZnVbp9Gf6/view?usp=drive_link">こちら</a>からダウンロード可能です。 <br>
+データセットは、LOD2建築物モデル自動生成ツールの操作マニュアルで提供されているデータセットと同一です。</p>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
